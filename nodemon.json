@@ -1,0 +1,6 @@
+{
+  "env": {"MONGO_USER":"mazoutadmin",
+            "MONGO_PASSWORD":"ECwnXPfPXTivnzWR",
+            "MONGO_DB":"ReactDev"
+    }
+}
