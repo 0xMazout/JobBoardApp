@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const { create } = require("./models/event");
 const res = require("express/lib/response");
 const app = express();
+const rootResolver = require("./graphql/resolvers/index")
 // const events = [];
 
 const graphQlSchema = require('./graphql/schema/index')
