@@ -11,8 +11,13 @@ const rootResolver = require("./graphql/resolvers/index")
 
 const graphQlSchema = require('./graphql/schema/index')
 const graphQlResolvers = require('./graphql/resolvers/index')
+const isAuth =require('./middleware/is-auth')
+
 
 app.use(bodyParser.json());
+
+app.use(isAuth)
+
 app.use('/graphql', graphqlHTTP({
     schema:graphQlSchema,
     rootValue:graphQlResolvers,
