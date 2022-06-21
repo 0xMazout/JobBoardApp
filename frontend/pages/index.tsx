@@ -2,8 +2,20 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-
+import NavBar from '../components/NavBar'
+import CardProject from '../components/CardProject'
+import SearchBar from '../components/SearchBar'
+import {IProject} from '../interfaces/iProjects'
 const Home: NextPage = () => {
+
+  //Foreach CardProject in json Projects create the grid 
+  const projects = new Array<IProject>();
+  const populateDataFromProjects = (data:Array<IProject>) =>{
+    data.forEach(element => {
+      projects.push(element);
+    });
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,12 +23,27 @@ const Home: NextPage = () => {
         <meta name="description" content="Book your Event here" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
+      <NavBar>
 
+      </NavBar>
+
+      <SearchBar>
+
+      </SearchBar>
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a>EventLand</a>
         </h1>
 
+      <section className={styles.SectionIndexDashboard}>
+        <h3 className={styles.IntroDashBoardText}>
+          Find your next project who can change the world 
+        </h3>
+      </section>
+      <p>
+
+      </p>
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
