@@ -18,18 +18,22 @@ const CardProject = (_props: any) => {
             />
           </div>
           <p className={styles.ProOrLearn}>Professional or Learning</p>
-          <p className={styles.SocialsTab}>Socials tab</p>
+          <p className={styles.isProjectLive}>Live or New</p>
+          <p className={styles.SocialsTab}>Socials</p>
+          <p className={styles.SocialsIcons}>Socials Icons</p>
         </div>
 
         <div className={styles.SecondMainColumn}>
           <div className={styles.FirstSecondColumn}>
             <h3 className={styles.Title}>{_props.arrayItem.title}</h3>
-            <p className={styles.Bc}>BC</p>
             <p className={styles.Theme}>{_props.arrayItem.theme}</p>
-            <div className={styles.FullRow}>Description Component</div>
+            <p className={styles.Bc}>BC</p>
+            <p className={styles.DescriptionTitle}>Description</p>
+            <div className={styles.Description}>{_props.arrayItem.description}</div>
           </div>
           <div className={styles.SecondSecondColumn}>
             <div className={styles.TeamCard}>
+              {/* If there is a Team in _props.arrayItem.team display TeamCard */}
               <p className={styles.ComponentTitle}>Team Title</p>
               <div className={styles.ContainerImageTeam}>
                 <Image
@@ -38,17 +42,11 @@ const CardProject = (_props: any) => {
                   src={logo}
                 ></Image>
               </div>
-              <p className={styles.TeamNumberX}>Team Number X</p>
+              <p className={styles.TeamMember}>Team Member X</p>
             </div>
             <div className={styles.MembersSearched}>Membres Recherchés</div>
             <div className={styles.MembersComponent}>
               Members Component Contains Logo and Image of Members
-            </div>
-            <div>
-              <p className={styles.MembersNumber}>Members Number</p>
-            </div>
-            <div>
-              <p className={styles.isProjectLive}>Live Project or Creation</p>
             </div>
           </div>
         </div>

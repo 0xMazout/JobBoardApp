@@ -55,22 +55,49 @@
     flex-grow: 1;
 }
 
-%fontBasic{
+%fontBasicTitle{
     font-family: 'Roboto', sans-serif;
-    font-size: 1em;
+    font-size: 0.8em;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 1em;
+    letter-spacing: 0.05em;
+    color: #382abb;
+}
+
+%fontTextLongSmall{
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8em;
     font-weight: normal;
     font-style: normal;
-    line-height: 0.5;
-    letter-spacing: normal;
+    line-height: 1em;
+    letter-spacing: 0.05em;
     color: #413e5e;
 }
 
 %fontBold{
     font-family: 'Roboto', sans-serif;
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: bold;
     font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
+    line-height: 1;
+    color: #382abb;
+}
+
+%fontText{
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9em;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    color: #413e5e;
+}
+
+%fontTitle{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 1;
     color: #382abb;
 }
