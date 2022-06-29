@@ -1,6 +1,76 @@
 // PlaceHolders to Centre element 
+@import url(https://yarnpkg.com/en/package/normalize.css); 
 %flex-center{
     display:flex;
     justify-content: center;
     align-items: center;
+}
+
+%flex-row{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+%flex-column{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+%flex-row-reverse{
+    display:flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+}
+
+%flex-column-reverse{
+    display:flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+}
+%flex-wrap{
+    display:flex;
+    flex-wrap: wrap;
+}
+%flex-nowrap{
+    display:flex;
+    flex-wrap: nowrap;
+}
+%flex-wrap-reverse{
+    display:flex;
+    flex-wrap: wrap-reverse;
+}
+
+%flex-fill{
+    display:flex;
+    flex: 1 1 auto;
+}
+%flex-grow-0{
+    display:flex;
+    flex-grow: 0;
+}
+%flex-grow-1{
+    display:flex;
+    flex-grow: 1;
+}
+
+%fontBasic{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 0.5;
+    letter-spacing: normal;
+    color: #413e5e;
+}
+
+%fontBold{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #382abb;
 }

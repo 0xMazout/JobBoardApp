@@ -5,16 +5,12 @@ import styles from '../styles/Home.module.css'
 import NavBar from '../components/NavBar'
 import CardProject from '../components/CardProject'
 import SearchBar from '../components/SearchBar'
-import {IProject} from '../interfaces/iProjects'
-const Home: NextPage = () => {
+import {IProject} from '../interfaces/iProject'
+import example from  "../exemples/projects.json"
+import CardsManager from '../components/CardsManager'
 
-  //Foreach CardProject in json Projects create the grid 
-  const projects = new Array<IProject>();
-  const populateDataFromProjects = (data:Array<IProject>) =>{
-    data.forEach(element => {
-      projects.push(element);
-    });
-  }
+
+const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
@@ -31,9 +27,13 @@ const Home: NextPage = () => {
       <SearchBar>
 
       </SearchBar>
+
+      <CardsManager>
+        
+      </CardsManager>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a>EventLand</a>
+          Welcome to <a>CryptoBuildZone</a>
         </h1>
 
       <section className={styles.SectionIndexDashboard}>

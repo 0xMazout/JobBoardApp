@@ -1,9 +1,9 @@
 import {IProfil}from "./iProfil";
 
 export interface IProject{
-    theme:string;
     title:string;
+    theme:string;
     description:string;
-    links:[string];
-    team:[IProfil];
+    links:string[];
+    team:number[];//Actually contain id team number //IProfil
 }
