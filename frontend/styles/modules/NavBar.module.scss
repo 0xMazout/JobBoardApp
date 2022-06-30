@@ -5,6 +5,7 @@
     width: 100%;
     grid-row: 1;
     grid-template-columns: 1fr;
+    
     .item {
         display: grid;
         background-color: rgb(167, 172, 164);
@@ -42,7 +43,8 @@
     grid-column: 1/2;
     margin-block-start: 1em;
     margin-block-end: 1em;
-    grid-row: 1;    
+    grid-row: 1;
+    margin-left: 1em;    
 }
 
 .sectiona {
@@ -51,7 +53,8 @@
     width: 100%;
     max-height: auto;
     height: auto;
-    
+    background-color: rgb(101, 104, 99);
+    margin-bottom: 30px
 }
 
 .logo {

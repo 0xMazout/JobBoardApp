@@ -18,14 +18,14 @@ const NavBar = (_props: any) => {
         </div>
 
         <ul className={styles.menu}>
-          <Link href="/">
-            <li className={styles.item}>New</li>
+          <Link href="/chooseNew">
+            <button className={styles.item}>New</button>
           </Link>
           <Link href="/">
-            <li className={styles.item}>Dashboard</li>
+            <button className={styles.item}>Dashboard</button>
           </Link>
           <Link href="/">
-            <li className={styles.item}>Profil</li>
+            <button className={styles.item}>Profil</button>
           </Link>          
         </ul>
       </section>

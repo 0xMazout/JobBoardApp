@@ -6,11 +6,13 @@ import NavBar from '../components/NavBar'
 import CardProject from '../components/CardProject'
 import SearchBar from '../components/SearchBar'
 import {IProject} from '../interfaces/iProject'
-import example from  "../exemples/projects.json"
 import CardsManager from '../components/CardsManager'
+import MainLayout from '../components/MainLayout'
+import { ReactElement } from 'react'
+// import type { ComponentWithPageLayout } from './_app'
 
 
-const Home: NextPage = () => {
+function Home ()  {
 
   return (
     <div className={styles.container}>
@@ -19,10 +21,6 @@ const Home: NextPage = () => {
         <meta name="description" content="Book your Event here" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
-      <NavBar>
-
-      </NavBar>
 
       <SearchBar>
 
@@ -95,5 +93,8 @@ const Home: NextPage = () => {
     </div>
   )
 }
+
+
+Home.PageLayout = MainLayout;
 
 export default Home

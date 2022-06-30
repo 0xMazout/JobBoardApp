@@ -1,0 +1,19 @@
+.pill {
+        font-size: 12px;
+        font-family: 'Roboto', sans-serif;
+        padding: 0.5em 1em;
+        margin: 0.25em;
+        border-radius: 1em;
+        border: none;
+        outline: none;
+        // background-color: #5264AE;
+        cursor: pointer;
+}
+
+.pill:not(.pillSelected):hover{
+    background: #cccccc;    
+}
+.pillSelected{
+    background: #ae5280;
+    color: #ffffff;
+}
