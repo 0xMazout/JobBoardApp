@@ -8,5 +8,34 @@
         "name": "Collection",
         "selected": false,
         "domain": "NFT"
+    },    {
+        "name": "AMM",
+        "selected": false,
+        "domain": "NFT"        
+    },    {
+        "name": "Exchange",
+        "selected": false,
+        "domain": "NFT"        
+    },    {
+        "name": "P2E",
+        "selected": false,
+        "domain": "NFT"        
+    },    {
+        "name": "Data ",
+        "selected": false,
+        "domain": "NFT"        
+    },    {
+        "name": "Learning",
+        "selected": false,
+        "domain": "NFT"        
+    },    {
+        "name": "IA",
+        "selected": false,
+        "domain": "NFT"        
+    },    {
+        "name": "Layers",
+        "selected": false,
+        "domain": "NFT"        
     }
+    
 ]

@@ -1,8 +1,8 @@
 import React from "react";
-import examplecopy from "../exemples/projects copy.json";
-import { IProject } from "../interfaces/iProject";
-import CardProject from "../components/CardProject"
-import styles from "../styles/modules/CardsManager.module.scss";
+import examplecopy from "../../exemples/projects copy.json";
+import { IProject } from "../../interfaces/iProject";
+import CardProject from "./CardProject"
+import styles from "../Cards/styles/CardsManager.module.scss";
 // Populate and Create Cards
 // Contains Logic about Cards and Displaying
 let cardsProjects = new Array();

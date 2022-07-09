@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "../styles/modules/CardProject.module.scss";
-import logo from "../public/1200px-The_Event_2010_Intertitle.svg.png";
+import styles from "../Cards/styles/CardProject.module.scss";
+import logo from "../../public/1200px-The_Event_2010_Intertitle.svg.png";
 
 const CardProject = (_props: any) => {
   return (

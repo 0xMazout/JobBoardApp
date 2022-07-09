@@ -1,0 +1,21 @@
+/* 11. hover-border-1 */
+.btn.hover-border-1::before,
+.btn.hover-border-1::after {
+  width: 10%; height: 25%;
+  transition: 0.35s;
+}
+.btn.hover-border-1::before {
+  top: 0; left: 0;
+  border-left: 1px solid rgb(28, 31, 30);
+  border-top: 1px solid rgb(28, 31, 30);
+}
+.btn.hover-border-1::after {
+  bottom: 0; right: 0;
+  border-right: 1px solid rgb(28, 31, 30);
+  border-bottom: 1px solid rgb(28, 31, 30);
+}
+.btn.hover-border-1:hover::before,
+.btn.hover-border-1:hover::after {
+  width: 99%;
+  height: 98%;
+}

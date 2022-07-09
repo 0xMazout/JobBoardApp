@@ -1,16 +1,34 @@
 [
     {
-        "title": "Je suis un titre super long sa mere il se passe quoi",
-        "theme":"Je suis un theme super long sa mere il  se passe quoi",
-        "description":"Higuys this is a description Higuys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a descriptionHiguys this is a description",
-        "links":["https://Instagram.com","Linkedin.com","Hola.com"],
-        "team":[1,2]
+        "title": "Title1",  
+        "theme": "Theme1",  
+        "description": "Jesuis une description tarping long sa mere Jesuis une description tarping long sa mereJesuis une description tarping long sa mere",  
+        "links": ["https://Instagram.com","Linkedin.com","Hola.com"], 
+        "team": [1,2], 
+        "tags": ["DAO","Collection"], 
+        "typeWork": "Blablabla", 
+        "isSplitSharing": false,
+        "members": [101,2052,302], 
+        "membersWanted": ["fullStackDev", "Manager"],
+        "blockChain": "Avax",  
+        "createdAt": "Fri Jul 08 2022 11:55:44",  
+        "updatedAt": "Fri Jul 08 2022 15:55:44",
+        "id":1
     },
     {
-        "title": "hello1",
-        "theme":"theme2",
-        "description":"Higuys this is a description",
-        "links":["https://Instagram.com","Linkedin.com","Hola.com"],
-        "team":[1,2]
+        "title": "Title2",  
+        "theme": "Theme2",  
+        "description": "Jesuis une description tarping long sa mere Jesuis une description tarping long sa mereJesuis une description tarping long sa mere",  
+        "links": ["https://Instagram.com","Linkedin.com","Hola.com"], 
+        "team": [1,2], 
+        "tags": ["DAO","Collection"], 
+        "typeWork": "Blablabla", 
+        "isSplitSharing": false,
+        "members": [101,2052,302], 
+        "membersWanted": ["fullStackDev", "Manager"],
+        "blockChain": "Solana",  
+        "createdAt": "Fri Jul 08 2022 11:55:44",  
+        "updatedAt": "Fri Jul 08 2022 15:55:44",
+        "id": 2
     }
 ]

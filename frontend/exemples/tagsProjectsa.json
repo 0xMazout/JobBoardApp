@@ -1,0 +1,12 @@
+[
+    {
+        "name": "DAO",
+        "selected": false,
+        "domain": "NFT"        
+    },
+    {
+        "name": "Collection",
+        "selected": false,
+        "domain": "NFT"
+    }
+]
