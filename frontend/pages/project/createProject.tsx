@@ -11,6 +11,7 @@ import FetchDatafromJson from "../../components/utilityComponents/fetchDatafromJ
 import MultiSelectDropDown from "../../components/styledComponents/MultiSelectDropDown";
 import Link from "next/link";
 import LabelInput from "../../components/styledComponents/LabelInput";
+import {mainStore , useStore} from "../../store/MainStore";
 
 type Props = {
   children: ReactNode;
@@ -54,17 +55,21 @@ const CreateProject = (_props: Props) => {
     }
   })
 
-  const getCallbackFromElements = () => {
-    setProject({...project, tags: tagsLists, typeWork: typeSelected});
-  };  
+  // const getCallbackFromElements = () => {
+  //   setProject({...project, tags: tagsLists, typeWork: typeSelected});
+  // };  
 
-  const handleSubmit = (event) => {
+  const HandleSubmit = (event) => {
+    console.log("submit");
     event.preventDefault();
+    const { labelStore } = useStore()
+    labelStore.updateSubmit();
+    // MainStore.labelStore.updateSubmit();
   }
 
   return (
     <>
-      <form>
+      <form onSubmit={HandleSubmit}>
       {/* <form onSubmit={}> */}
         <div>Here to create new Project</div>
         <div className={styles.group}>
@@ -127,7 +132,7 @@ const CreateProject = (_props: Props) => {
       <div>
         <button className={styles.SubmitButton} type='submit' onClick={
           () => {
-            getCallbackFromElements();
+            // getCallbackFromElements();
           }
         }>
             <p>Submit</p>

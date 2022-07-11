@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "mobx": "^6.6.1",
+    "mobx-react": "^7.5.2",
     "multiselect-react-dropdown": "^2.0.25",
     "next": "12.1.6",
     "normalize.css": "^8.0.1",

@@ -3,7 +3,7 @@ import { IProject } from '../interfaces/iProject'
 
 type Props = {}
 
-function ProjectStore (_props: Props) {
+export function ProjectStore () {
 
   const ProjectData : IProject = {
     title: "", // string
@@ -41,11 +41,6 @@ function ProjectStore (_props: Props) {
       // TODO
     }
   }
-
-
-  return (
-    <div>ProjectStore</div>
-  )
 }
 
 export default ProjectStore
