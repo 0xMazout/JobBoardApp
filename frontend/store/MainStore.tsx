@@ -7,16 +7,26 @@ import {ILabelStore} from '../interfaces/store/iLabelStore';
 import {IProjectStore} from '../interfaces/store/iProjectStore'; 
 import LabelStore from './LabelStore';
 import ProjectStore from './ProjectStore'
+import { configure } from "mobx"
+
+configure({
+    enforceActions: "always",
+    computedRequiresReaction: true,
+    reactionRequiresObservable: true,
+    observableRequiresReaction: true,
+    disableErrorBoundaries: true
+})
 
 export interface IStore {
-  labelStore: ILabelStore;
-  projectStore: IProjectStore;
+  labelStore: LabelStore;
+  projectStore: ProjectStore;
 }
 export const mainStore: IStore = {
     labelStore: new LabelStore(),
   projectStore: new ProjectStore()
 };
 export const StoreContext = createContext(mainStore);
-export const useStore = () => {
+export const useStoreContainer = () =>{
+  // const useStore = useContext(StoreContext);
   return useContext(StoreContext);
-};
+}

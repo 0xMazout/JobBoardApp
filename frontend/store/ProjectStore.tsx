@@ -3,9 +3,9 @@ import { IProject } from '../interfaces/iProject'
 
 type Props = {}
 
-export function ProjectStore () {
+export class ProjectStore {
 
-  const ProjectData : IProject = {
+   ProjectData : IProject = {
     title: "", // string
     theme: "", // string
     description: "", // string
@@ -23,24 +23,24 @@ export function ProjectStore () {
   }
 
   // Contains CRUD Store for Project
-  const ProjectStore = {
+  
     // Create Project
     createProject: (project: any) => {
       // TODO
-    },
+    }
     // Read Project
     readProject: (id: string) => {
       // TODO
-    },
+    }
     // Update Project
     updateProject: (project: any) => {
       // TODO
-    },
+    }
     // Delete Project
     deleteProject: (id: string) => {
       // TODO
     }
-  }
+  
 }
 
 export default ProjectStore

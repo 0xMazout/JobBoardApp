@@ -49,6 +49,7 @@ export default function FetchDatafromJson(_props: Props) {
           item={propsItem}
           Callback={propsItem}
           getCallback={getCallBackFromChild}
+          key={_props.arraySource.indexOf(propsItem)}
           ></_props.resultType>
       );
     });

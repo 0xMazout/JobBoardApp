@@ -7,9 +7,9 @@ export interface ILabelStore {
   value: any;
   LabelsData: {arrayLabels: Array<ILabel>}
   updateSubmit: () => void;
-  submitFire: (action: string) => void;
+  submitFire: () => void;
   addLabel: (label: ILabel) => void;
   deleteLabel: (labelName: string) => void;
-  updateLabel: (action: string) => void;
-  getLabels: (action: string) => void;
+  updateLabel: (label: ILabel) => void;
+  getLabels: () => void;
 }

@@ -1,50 +1,67 @@
-import { action, observable, reaction } from "mobx";
+import { action, computed, makeAutoObservable, makeObservable, observable, reaction ,autorun, trace} from "mobx";
 import React from "react";
 import { ILabel } from "../interfaces/iLabel";
+import {ILabelStore} from '../interfaces/store/iLabelStore';
 // type Props = {}
 
-export function LabelStore() {
-  const LabelsData = observable({ arrayLabels:new Array<ILabel>()});
-
-  const stateLabels = observable({
+ export class LabelStore {
+  LabelsData = observable({ arrayLabels:new Array<ILabel>()});
+  stateLabels = observable({
     isSubmit: false,
   });
-  // const LabelData : ILabel = {
-  //     name: "", // string
-  //     value: "", // string
-  // }
+
+  constructor() {
+    makeAutoObservable (this)
+    // reaction(
+    //   () => this.LabelsData.arrayLabels,
+    //   (labels) => {
+    //     this.data = labels;
+    //   }
+    // );
+   // no work here only assignments
+  }
 
   // Contains CRUD Store for Label
-  const getLabels = () => {
-    // TODO
+  getLabels = () => {
+    return this.LabelsData.arrayLabels;
   };
-  const updateLabel = (label: ILabel) => {
-    // TODO
+  
+  addLabel = (label: ILabel) => {
+    this.LabelsData.arrayLabels.push(label);
+    // const labels = this.LabelsData.arrayLabels;
   };
-  const deleteLabel = (labelName: string) => {
-    // TODO
-  };
-
-  const fetchLabels = () => {};
-
-  const addLabel = (label: ILabel) => {
-    LabelsData.arrayLabels.push(label);
-  };
+  @action
+  updateLabel = (label: ILabel) => {
+    const index = this.LabelsData.arrayLabels.findIndex(
+      (item) => item.name === label.name
+    );
+    this.LabelsData.arrayLabels[index] = label;
+  }
 
   //Trigerred when the user submits the form
-  const updateSubmit = () =>
-    action((isSubmit) => {
-      stateLabels.isSubmit = true;
+  @action
+  updateSubmit = () =>
+    action(() => {
+      trace();
+      console.log("hello i'm labelstore i m updatesubmit");
+      this.stateLabels.isSubmit = true;
     });
   //Trigerred when submitState Change
-  const submitFire = () =>
+  @action
+  submitFire = () =>
     reaction(
-      () => stateLabels.isSubmit,
-      () => {
+      () => this.stateLabels.isSubmit,
+      (istrue) => {
+        trace();
         // Catch Values from all inputs
-        return LabelsData;
+        console.log(`SubmitFire: ${istrue}`);
+        return this.LabelsData
       }
     );
+
+    // autorun(() => {
+    //   console.log(`SubmitFire: i made a fucking change bitch`);
+    // })
 }
 
 export default LabelStore;

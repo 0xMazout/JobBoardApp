@@ -18,7 +18,7 @@ let tryread = examplecopy;
 populateDataFromProjects(tryread);
 
 {projects.map((arrayItem) => {
-    cardsProjects.push(<CardProject className={styles.cardProject} arrayItem={arrayItem}></CardProject>)
+    cardsProjects.push(<CardProject className={styles.cardProject} arrayItem={arrayItem} key={projects.indexOf(arrayItem)}></CardProject>)
  })}
  
 

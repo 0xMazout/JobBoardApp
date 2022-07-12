@@ -11,7 +11,9 @@ import FetchDatafromJson from "../../components/utilityComponents/fetchDatafromJ
 import MultiSelectDropDown from "../../components/styledComponents/MultiSelectDropDown";
 import Link from "next/link";
 import LabelInput from "../../components/styledComponents/LabelInput";
-import {mainStore , useStore} from "../../store/MainStore";
+import {mainStore , useStoreContainer} from "../../store/MainStore";
+import { action, observable } from "mobx";
+import { Observer } from "mobx-react";
 
 type Props = {
   children: ReactNode;
@@ -21,6 +23,7 @@ const CreateProject = (_props: Props) => {
   const [isSplitSharing, setSplitSharing] = useState(false);
   const [tagsLists, setTagsLists] = useState(Array<string>());
   const [typeSelected, setTypeSelected] = useState(Array<string>());
+  const MainStore = useStoreContainer()
   // will contains generic callback from inputs
   // const projectCreated : IProject = {
   //   name: "",
@@ -42,8 +45,6 @@ const CreateProject = (_props: Props) => {
     resultStyleName: styles.TagsButton,
     Callback: (tagsChecked: Array<string>) => {
       setTagsLists(tagsChecked);
-      console.log(tagsChecked);
-      // useCallback(() => setTagsLists((tagsChecked) => [tagsChecked, tagsLists]),[item.name]);
     }
   });
   //populate and create MultiSelectDropDown with typeWorkProfiles
@@ -59,16 +60,16 @@ const CreateProject = (_props: Props) => {
   //   setProject({...project, tags: tagsLists, typeWork: typeSelected});
   // };  
 
-  const HandleSubmit = (event) => {
-    console.log("submit");
+
+  
+  const HandleSubmit = (event) => action(() => {
+    MainStore.labelStore.updateSubmit();
     event.preventDefault();
-    const { labelStore } = useStore()
-    labelStore.updateSubmit();
-    // MainStore.labelStore.updateSubmit();
-  }
+  })
 
   return (
     <>
+    
       <form onSubmit={HandleSubmit}>
       {/* <form onSubmit={}> */}
         <div>Here to create new Project</div>
@@ -78,6 +79,7 @@ const CreateProject = (_props: Props) => {
           <span className={styles.bar}></span>
           <label className={styles.labelText}>Title</label>
         </div>
+        <LabelInput label="Title"/>
 
         <div className={styles.group}>
           <input className={styles.inputText} type="text" required />
@@ -100,13 +102,13 @@ const CreateProject = (_props: Props) => {
           <span className={styles.bar}></span>
           <label className={styles.labelText}>Theme</label>
         </div>
-      </form>
+      
       <p>Tags</p>
-      {/* <ToggleButtonCustom>
-    </ToggleButtonCustom> */}
       {resultTagsFromDatafetch}
 
       <br></br>
+      
+
       {/* Need to be replace with toggle button */}
       <div className={styles.checkBoxx}>
         <label className={styles.labelCheckBox}>Split Sharing ?</label>
@@ -126,13 +128,13 @@ const CreateProject = (_props: Props) => {
       </div>
       </>
       ) : (<div></div>)}
-
+      <p>Type of Work</p>
       {resultTypeWorkProfilesFromDatafetch}
 
       <div>
         <button className={styles.SubmitButton} type='submit' onClick={
-          () => {
-            // getCallbackFromElements();
+          (evt) => {
+            HandleSubmit(evt)
           }
         }>
             <p>Submit</p>
@@ -152,6 +154,8 @@ const CreateProject = (_props: Props) => {
       <input></input>
       <p>Blockchain</p>
       <input></input>
+      </form>
+            
     </>
   );
 };

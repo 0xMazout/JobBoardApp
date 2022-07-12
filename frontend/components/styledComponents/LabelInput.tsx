@@ -1,18 +1,19 @@
-import { action , observable } from 'mobx'
+import { action , observable, when } from 'mobx'
 import { observer } from "mobx-react-lite"
 import React, { useState } from 'react'
 import styles from './styles/LabelInput.module.scss'
 import LabelStore from '../../store/LabelStore'
 import { ILabel } from '../../interfaces/iLabel'
-import {useStore} from '../../store/MainStore'
+import {useStoreContainer} from '../../store/MainStore'
+
 
 type Props = {
-    label: string
+    label: string,
 }
 
 function LabelInput(_props: Props) {
 
-  const MainStore = useStore()
+  const MainStore = useStoreContainer()
   // const [value, setValue] = useState(String)
   const states = observable({
     valueee: typeof _props.label === 'string' ? _props.label : 0,
@@ -20,6 +21,7 @@ function LabelInput(_props: Props) {
   })
   const changeValue = (valueFromInput) => action( state =>{
     states.valueee = valueFromInput
+    // MainStore.labelStore.stateLabels.isSubmit ?
   })
   /// Maybe we can use the loseFocus on input to submit to store 
   const submitToStore = () => {
@@ -29,6 +31,12 @@ function LabelInput(_props: Props) {
     }as ILabel)
   };
   
+  when(() => MainStore.labelStore.stateLabels.isSubmit, () => {
+    console.log("hello i'm submit")
+    submitToStore()
+  })
+
+
   // const inputText = observer(({ event.target.value }) => <input id='inputText' className={styles.inputText} 
   // onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event.target.value)} type="text" required />)
 
