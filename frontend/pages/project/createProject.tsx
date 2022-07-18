@@ -82,6 +82,7 @@ const CreateProject = (_props: Props) => {
         <div>Here to create new Project</div>
         <br></br>
         <LabelInput label="Title"/>
+        
         <LabelInput label="Description"/>
         {/* Is a 150 words Speech to catch users */}
         <LabelInput label="Theme"/>

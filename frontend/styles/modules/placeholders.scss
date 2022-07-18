@@ -1,5 +1,7 @@
 // PlaceHolders to Centre element 
 @import url(https://yarnpkg.com/en/package/normalize.css); 
+@import "cardPaddingPlaceHolder.scss";
+
 %flex-center{
     display:flex;
     justify-content: center;
