@@ -7,6 +7,7 @@ import {ILabelStore} from '../interfaces/store/iLabelStore';
 import {IProjectStore} from '../interfaces/store/iProjectStore'; 
 import LabelStore from './LabelStore';
 import ProjectStore from './ProjectStore'
+import MemberStore from './MemberStore';
 import { configure } from "mobx"
 
 configure({
@@ -20,10 +21,12 @@ configure({
 export interface IStore {
   labelStore: LabelStore;
   projectStore: ProjectStore;
+  memberStore: MemberStore;
 }
 export const mainStore: IStore = {
-    labelStore: new LabelStore(),
-  projectStore: new ProjectStore()
+  labelStore: new LabelStore(),
+  projectStore: new ProjectStore(),
+  memberStore: new MemberStore()
 };
 export const StoreContext = createContext(mainStore);
 export const useStoreContainer = () =>{

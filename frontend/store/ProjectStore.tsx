@@ -5,7 +5,8 @@ type Props = {}
 
 export class ProjectStore {
 
-   ProjectData : IProject = {
+  
+  ProjectData : IProject = {
     title: "", // string
     theme: "", // string
     description: "", // string
@@ -14,6 +15,7 @@ export class ProjectStore {
     tags: new Array<string>, // array of strings
     typeWork: "", // array of strings
     isSplitSharing: false, // boolean
+    isCommercial: false, // boolean
     members: new Array<number>, // array of strings
     membersWanted: new Array<string>, // array of strings
     blockChain: "", // string
@@ -21,9 +23,19 @@ export class ProjectStore {
     updatedAt: new Date, // string
     id: 0, // number
   }
+  
+
+  // if It's an Update Search Project in BDD then
+  // Past ProjectData into the Project Object then Register into BDD 
+
+
+  // if It's a new Past ProjectData into BDD
 
   // Contains CRUD Store for Project
   
+  updateCommercialProject(checked: boolean) {
+    this.ProjectData.isCommercial = checked;
+  }
     // Create Project
     createProject: (project: any) => {
       // TODO

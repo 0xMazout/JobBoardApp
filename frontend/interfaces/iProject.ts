@@ -9,6 +9,7 @@ export interface IProject {
   tags: string[];
   typeWork: string;
   isSplitSharing: boolean;
+  isCommercial: boolean;
   members: number[]; //Actually contain id team number //IProfil
   membersWanted: string[];
   blockChain: string;

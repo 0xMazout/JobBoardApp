@@ -3,14 +3,13 @@ import Multiselect from 'multiselect-react-dropdown';
 import "./styles/MultiSelectDropDown.module.css";
 
 type Props = {
-    arraySource: Array<{}>,
+    arraySource: Array<any>,
     displayName:string,
     getSelectedList: (selectedList:Array<any>) => void;
+    singleSelect?:boolean;
 }
 
 function MultiSelectDropDown(_props: Props) {
-
-
 
     // let state = {
     //     options: [{name: 'Option 1️⃣', id: 1},{name: 'Option 2️⃣', id: 2}]
@@ -38,9 +37,11 @@ function MultiSelectDropDown(_props: Props) {
     onSelect={onSelect} // Function will trigger on select event
     onRemove={onRemove} // Function will trigger on remove event
     displayValue={_props.displayName} // Property name to display in the dropdown options
+    singleSelect={_props.singleSelect? true : false}
     style={{
         chips:{
             background: "#5212a5",
+            color:"#FFF"
         },
         searchBox:{
             border: "1px solid #5212a5",

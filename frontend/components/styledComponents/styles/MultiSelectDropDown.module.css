@@ -32,7 +32,7 @@
 .multiSelectContainer input:focus {
   outline: none;
 }
-.chip {
+.chip{
   padding: 4px 10px;
   background: #5212a5;
   margin-right: 5px;
@@ -46,10 +46,8 @@
   white-space: nowrap;
 }
 .singleChip {
-  background: none;
-  border-radius: none;
-  color: inherit;
   white-space: nowrap;
+  color: #fff;
 }
 .singleChip i {
   display: none;
@@ -95,7 +93,7 @@
 }
 .highlightOption {
   background: #5212a5;
-  color: #ffffff;
+  color: #fff;
 }
 .displayBlock {
   display: block;
@@ -109,9 +107,10 @@
 }
 .singleSelect {
   padding-right: 20px;
+  color: #fff;
 }
 li.groupHeading {
-  color: #908e8e;
+  color: #861212;
   pointer-events: none;
   padding: 5px 15px;
 }

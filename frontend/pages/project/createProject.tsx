@@ -1,7 +1,6 @@
 import React, { ReactNode, useCallback, useState } from "react";
 import MainLayout from "../../components/MainLayout";
 import styles from "../../styles/modules/CreateProject.module.scss";
-import ToggleButtonCustom from "../../components/styledComponents/toggleButtonCustom";
 import TagsButton from "../../components/styledComponents/TagsButton";
 import { ITags } from "../../interfaces/iTags";
 import { IProject } from "../../interfaces/iProject";
@@ -14,6 +13,8 @@ import LabelInput from "../../components/styledComponents/LabelInput";
 import {mainStore , useStoreContainer} from "../../store/MainStore";
 import { action, observable } from "mobx";
 import { Observer } from "mobx-react";
+import CardMembersSearched from '../../components/Cards/CardMembersSearched'
+import ToggleButtonYesNo from "../../components/styledComponents/toggleButtonYesNo";
 
 type Props = {
   children: ReactNode;
@@ -47,18 +48,24 @@ const CreateProject = (_props: Props) => {
       setTagsLists(tagsChecked);
     }
   });
-  //populate and create MultiSelectDropDown with typeWorkProfiles
-  const resultTypeWorkProfilesFromDatafetch = MultiSelectDropDown({
-    arraySource: typeWorkProfiles,
-    displayName: "name",
-    getSelectedList: (selectedList: Array<string>) => {
-      setTypeSelected(selectedList);
-    }
+
+
+  //Copy this to implement Toggle Button
+  const resultToggleButtonCommercialProject = ToggleButtonYesNo({
+    getCallback(value) {
+        mainStore.projectStore.updateCommercialProject(value) 
+    },
+    label: "Commercial Project ?"
   })
 
-  // const getCallbackFromElements = () => {
-  //   setProject({...project, tags: tagsLists, typeWork: typeSelected});
-  // };  
+    //populate and create MultiSelectDropDown with typeWorkProfiles
+    const resultCategoriesFromDatafetch = MultiSelectDropDown({
+      arraySource: typeWorkProfiles,
+      displayName: "name",
+      getSelectedList: (selectedList: Array<string>) => {
+        setTypeSelected(selectedList);
+      }
+    })
 
 
   
@@ -69,46 +76,23 @@ const CreateProject = (_props: Props) => {
 
   return (
     <>
-    
-      <form onSubmit={HandleSubmit}>
-      {/* <form onSubmit={}> */}
+
+      {/* <form onSubmit={HandleSubmit}> */}
+      <form>
         <div>Here to create new Project</div>
-        <div className={styles.group}>
-          <input className={styles.inputText} type="text" required />
-          <span className={styles.highlight}></span>
-          <span className={styles.bar}></span>
-          <label className={styles.labelText}>Title</label>
-        </div>
+        <br></br>
         <LabelInput label="Title"/>
-
-        <div className={styles.group}>
-          <input className={styles.inputText} type="text" required />
-          <span className={styles.highlight}></span>
-          <span className={styles.bar}></span>
-          <label className={styles.labelText}>Description</label>
-        </div>
-
-        <div className={styles.group}>
-          <input className={styles.inputText} type="text" required />
-          <span className={styles.highlight}></span>
-          <span className={styles.bar}></span>
-          <label className={styles.labelText}>Pro or Learning</label>
-        </div>
-
+        <LabelInput label="Description"/>
         {/* Is a 150 words Speech to catch users */}
-        <div className={styles.group}>
-          <input className={styles.inputText} type="text" required />
-          <span className={styles.highlight}></span>
-          <span className={styles.bar}></span>
-          <label className={styles.labelText}>Theme</label>
-        </div>
-      
+        <LabelInput label="Theme"/>
+        
+        {resultToggleButtonCommercialProject}
+        
+    
       <p>Tags</p>
       {resultTagsFromDatafetch}
-
       <br></br>
       
-
       {/* Need to be replace with toggle button */}
       <div className={styles.checkBoxx}>
         <label className={styles.labelCheckBox}>Split Sharing ?</label>
@@ -128,18 +112,11 @@ const CreateProject = (_props: Props) => {
       </div>
       </>
       ) : (<div></div>)}
-      <p>Type of Work</p>
-      {resultTypeWorkProfilesFromDatafetch}
 
-      <div>
-        <button className={styles.SubmitButton} type='submit' onClick={
-          (evt) => {
-            HandleSubmit(evt)
-          }
-        }>
-            <p>Submit</p>
-        </button>
-      </div>
+      <br></br>
+      <CardMembersSearched>
+        
+      </CardMembersSearched>
       <p>Description</p>
       <input></input>
       <p>Deadline</p>
@@ -152,8 +129,20 @@ const CreateProject = (_props: Props) => {
       <input>{/* Is a List with Multiple choices 1 to 3 */}</input>
       <p>Category</p>
       <input></input>
+      
       <p>Blockchain</p>
       <input></input>
+
+      <div>
+        <button className={styles.SubmitButton} type='submit' onClick={
+          (evt) => {
+            HandleSubmit(evt)
+          }
+        }>
+            <p>Submit</p>
+        </button>
+      </div>
+
       </form>
             
     </>

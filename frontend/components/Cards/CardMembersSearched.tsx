@@ -1,15 +1,108 @@
-import React from 'react'
-import styles from '../../styles/modules/CardsMember.module.scss'
+import React, { useState } from 'react'
+import styles from './styles/CardMemberSearched.module.scss'
 import MultiSelectDropDown from '../styledComponents/MultiSelectDropDown'
+import LabelInput from '../styledComponents/LabelInput'
+import typeWorkProfiles from "../../exemples/typeWorkProfiles.json";
+import {mainStore ,useStoreContainer} from '../../store/MainStore'
+import { observable } from 'mobx';
+import {Status} from "../../enums/status";
 type Props = {
 
 }
 
 function CardMembersSearched(_props: Props) {
+
+  const MainStore = useStoreContainer()
+
+  const [typeSelected, setTypeSelected] = useState(Array<string>());
+  const [status, setStatus] = useState(Status.Partner)
+  const states = observable({
+      title:"",
+      typesSelected:typeSelected,
+      status: Status.Partner,
+      workLoad: "",
+      missionDescription: "",
+      skills: "",
+  })
+// got a problem on the value 
+const arrayStatus = [{
+  "name": Status.Partner},{
+  "name": Status.ServiceProvider},{
+  "name": Status.TeamMember
+}]
+  // const arrayStatus = [Status.Partner, Status.ServiceProvider, Status.TeamMember]
+  //implement Member Store class
+  // implement Member Entity on each count to store Data
+  // Get a state on Project Store to store all Members Data 
+  // Then if Project is Submit catch Data
+
+// implement demain 18.07 La gestion du titre , 
+//Est-ce necessaire d'utiliser Label Input et son store je suis pas sur
+// Potentiellement un input classique stocker dans le store du membre c'est ok !
+// le Css peut ressembler a celui des cards et pas être celui du haut du form 
+
+  //implement Set State , setTypeSelected
+
+  //populate and create MultiSelectDropDown with typeWorkProfiles
+  const resultTypeWorkProfilesFromDatafetch = MultiSelectDropDown({
+    arraySource: typeWorkProfiles,
+    displayName: "name",
+    getSelectedList: (selectedList: Array<string>) => {
+      setTypeSelected(selectedList);
+    }
+  })
+
+  const placeholderForWorkLoadInput = `make a speech about Implication time and devoted time to project you need,
+talk about Work Load and Pressure at the beggining is a good way to start a new project 
+`
+
+const placeholderForTitle  = `Here type the Member title, try to be attractive and catchy , 100 characters max
+`
+
+const placeholderForMissionDescription = `make a speech about what will be the mission for this member 
+or if it's too generic you can list some of the main tasks,
+Be carefull with the length of the speech, it shouldn't be too long 
+`
+const placeholderForSkills = `make a speech about Skills you're waiting for a new Member ,
+To start a new project you need to have members with specifics skills and socials skills, The Type Skills have been selected on top so be innovative ! 
+`
+  const resultStatus = MultiSelectDropDown({
+    arraySource: arrayStatus ,
+    displayName: "name",
+    singleSelect:true,
+    getSelectedList: (selectedList: Array<string>) => {
+      setTypeSelected(selectedList);
+    }
+  })
   return (
         <>
     <div className={styles.card}>
-        
+      <div className={styles.elementContainer}>
+    <p className={styles.DescriptionTitle}>
+    Titre
+      </p>
+      <textarea className={styles.LongTextMultiLine} wrap="true" placeholder={placeholderForTitle} rows={2} maxLength={100}>
+          </textarea> 
+        <p className={styles.DescriptionTitle}>
+          List Profils : MultiSelect Type Profils
+          </p>
+          {resultTypeWorkProfilesFromDatafetch}
+        <p className={styles.DescriptionTitle}>
+          List Status
+          </p> 
+          {resultStatus}
+        <div className={styles.Separator}>
+          </div>
+          <p className={styles.DescriptionTitle}>Work Load</p>
+          <textarea className={styles.LongTextMultiLine} wrap="true" placeholder={placeholderForWorkLoadInput} rows={6}>
+          </textarea>
+          <p className={styles.DescriptionTitle}>Mission Description</p>
+          <textarea className={styles.LongTextMultiLine} wrap="true" placeholder={placeholderForMissionDescription} rows={6}>
+          </textarea>
+          <p className={styles.DescriptionTitle}>Technical Skills / Socials Skills</p>
+          <textarea className={styles.LongTextMultiLine} wrap="true" placeholder={placeholderForSkills} rows={6}>
+          </textarea>
+      </div>
     </div>
     </>
   )
