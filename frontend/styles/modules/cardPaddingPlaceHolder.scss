@@ -12,3 +12,39 @@
         border-color: #45467a;
     }    
 }
+
+@mixin CardCenterMainFormatFullCenter{
+    .card {
+        margin: auto;
+        padding: 1rem;
+        text-align: left;
+        color: inherit;
+        text-decoration: none;
+        border: 1px solid #eaeaea;
+        border-radius: 10px;
+        transition: color 0.15s ease, border-color 0.15s ease;
+        // width: 35em;
+        min-width: 15em;
+        max-width: 45em;
+        min-height: 15em;
+        display: grid;
+        box-sizing: content-box;
+        // grid-template-columns: 20% 80%;
+        
+      }
+    
+      .card:hover{
+        //Need to update because if i Use color it change the selected value 
+        color: #3235d8;
+        border-color: #45467a;
+    }
+    
+    .elementContainer{
+        display: flexbox;
+        box-sizing: content-box;
+        flex-direction: row;
+        flex-wrap: wrap;
+        flex-flow: row;
+        margin:auto
+    }
+}

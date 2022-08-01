@@ -1,10 +1,18 @@
-import React from 'react'
+import { makeAutoObservable } from 'mobx'
+import React, { ReactElement } from 'react'
+import { arrayBuffer } from 'stream/consumers'
+import CardMembersSearched from '../components/Cards/CardMembersSearched'
 import { IProject } from '../interfaces/iProject'
 
 type Props = {}
 
 export class ProjectStore {
 
+  constructor() {
+    makeAutoObservable (this),
+    this.ProjectData
+    this.ProjectData.arrayMembers.push(CardMembersSearched())
+  }
   
   ProjectData : IProject = {
     title: "", // string
@@ -22,6 +30,7 @@ export class ProjectStore {
     createdAt: new Date, // string
     updatedAt: new Date, // string
     id: 0, // number
+    arrayMembers: new Array<ReactElement>
   }
   
 
@@ -36,20 +45,24 @@ export class ProjectStore {
   updateCommercialProject(checked: boolean) {
     this.ProjectData.isCommercial = checked;
   }
+  updateSplitSharing(checked: boolean) {
+    this.ProjectData.isSplitSharing = checked;
+  }
+  
     // Create Project
-    createProject: (project: any) => {
+    createProject: (project: IProject) => {
       // TODO
     }
     // Read Project
-    readProject: (id: string) => {
+    readProject: (id: number) => {
       // TODO
     }
     // Update Project
-    updateProject: (project: any) => {
+    updateProject: (project: IProject) => {
       // TODO
     }
     // Delete Project
-    deleteProject: (id: string) => {
+    deleteProject: (id: number) => {
       // TODO
     }
   

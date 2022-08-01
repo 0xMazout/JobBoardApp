@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useState } from "react";
+import React, { JSXElementConstructor, ReactElement, ReactNode, useCallback, useState } from "react";
 import MainLayout from "../../components/MainLayout";
 import styles from "../../styles/modules/CreateProject.module.scss";
 import TagsButton from "../../components/styledComponents/TagsButton";
@@ -10,11 +10,16 @@ import FetchDatafromJson from "../../components/utilityComponents/fetchDatafromJ
 import MultiSelectDropDown from "../../components/styledComponents/MultiSelectDropDown";
 import Link from "next/link";
 import LabelInput from "../../components/styledComponents/LabelInput";
-import {mainStore , useStoreContainer} from "../../store/MainStore";
-import { action, observable } from "mobx";
-import { Observer } from "mobx-react";
+import {mainStore } from "../../store/MainStore";
+import {useStoreContainer} from "../../hooks/useStoreContainer";
+import { action, computed, get, makeAutoObservable, observable, reaction, set } from "mobx";
+import { Observer, useLocalObservable } from "mobx-react";
 import CardMembersSearched from '../../components/Cards/CardMembersSearched'
 import ToggleButtonYesNo from "../../components/styledComponents/toggleButtonYesNo";
+import StepperInput from "../../components/styledComponents/StepperInput";
+import   {observer} from "mobx-react-lite";
+import longTextInput from "../../components/styledComponents/longTextInput";
+import LabelElement from "../../components/styledComponents/LabelElement";
 
 type Props = {
   children: ReactNode;
@@ -23,33 +28,133 @@ type Props = {
 const CreateProject = (_props: Props) => {
   const [isSplitSharing, setSplitSharing] = useState(false);
   const [tagsLists, setTagsLists] = useState(Array<string>());
-  const [typeSelected, setTypeSelected] = useState(Array<string>());
-  const MainStore = useStoreContainer()
-  // will contains generic callback from inputs
-  // const projectCreated : IProject = {
-  //   name: "",
-  //   description: "",
-  //   tags: [],
-  //   typeWork: [],
-  //   isSplitSharing: false,
-  //   members: [],
-  //   id: "",
-  //   createdAt: "",
-  //   updatedAt: "",
-  // };
-  // const [project, setProject] = useState(projectCreated);
-  // Populate and Create generic objects from props
-  // Fetch data from json and Populate Tags
+  // const [tabofMembers, setTabofMembers] = useState(Array<ReactElement>)
+  const {projectStore,labelStore} = useStoreContainer()
+
+
+
+  // tentative 27.07.2022
+  // On passe par un array classique et on stock dans cet array de maniere classique on met en observable 
+  // numberMember pour s'en servir pour regénerer a chaque fois l'array et le display quand numbermember change 
+  const states = observable({
+    numberMember: 1,
+    arrayMembers:[CardMembersSearched(1)]
+  })
+
+  const statesProject = observable({
+    title:"",
+    description:"",
+    theme:"",
+  })
+  
+  const updateNumberMember = action((valueFromInput) =>{
+    // trace(true);
+    console.log("im updateNumberMember")
+    states.numberMember = valueFromInput
+  })
+
+  
+
+  // const resultCardsMemberSearched = CardMembersSearched()
+
+  //26.07.2022
+  // lire ce qu'il y a plus  bas LFA 
+
+  // Create Computed from arrayMembers
+  // Doit réagir lorsque arrayMembers change (ajout ou suppression d'un élément)
+  // Renvoie un mapping de arrayMembers
+  const getArrayMembers = computed(() => {
+    states.numberMember
+    return projectStore.ProjectData.arrayMembers.map(() => React.createElement(CardMembersSearched))
+  }
+  );
+  
+  const newTab = observable({
+    arrayOfCardMember : []
+  })
+
+  //la solution est ici computed ou reaction pour observer les changements d'arrayMembers
+  // On affiche bien le premier coup mais on ne peut pas ajouter de cards ca ne se met pas a jour
+  //a l'heure actuelle aucun passage dans reaction // meme lorsquil est appellé dans le callback du stepperInput
+//   const UpdateDisplayCardMembers = reaction(() => 
+//     states.numberMember
+//   , () => {
+    
+//     console.log("je suis une reaction")
+//     setTabofMembers(projectStore.ProjectData.arrayMembers.map(() => {     
+//       return(CardMembersSearched());
+//   }))
+//     return <>
+//     {states.arrayMembers.map(() => {
+//       CardMembersSearched();
+//   })}
+//   </>
+// }  
+// )
+
+// const UpdateDisplayCardMembersWithNonTabObservable = reaction(() => 
+// states.numberMember
+// , () => {
+
+// console.log("je suis une reaction2")
+// return <>
+// {newTab}
+// </>
+// }  
+// )
+
+
+const delFromCardMemberArray = action(()=>{
+  newTab.arrayOfCardMember.splice(newTab.arrayOfCardMember.length)
+  projectStore.ProjectData.arrayMembers.splice(projectStore.ProjectData.arrayMembers.length-1)
+  // states.arrayMembers.splice(states.arrayMembers.length);
+  console.log("imdelfunction")
+})
+
+
+const addfromCardMemberArray = action((value)=>{
+  // console.log(states.arrayMembers)
+  console.log("imAddfunction")
+  projectStore.ProjectData.arrayMembers.push(CardMembersSearched(value))
+
+});
+  //IT WORKED ACTION IS LIKE THIS !!
+  // My problem is how to get length on array observable
+  //Creuser Proxy , car l'objet a l'air d'être contenue dans Proxy
+  //Proxy est un objet Mobx
+  const UpdateCardMemberSearched = action((value)=>{
+
+    // mon tableau est un tableau de multiples objets[{...},{...}]
+    // console.log(states.arrayMembers.length me donne 1)
+    // je cherche a obtenir la valeur de la longueur du tableau observable
+
+  (value < projectStore.ProjectData.arrayMembers.length) ? delFromCardMemberArray() : addfromCardMemberArray(projectStore.ProjectData.arrayMembers.length); 
+    runconsoleLog("hello i'm console log from action function")    
+  })
+
+
+  const runconsoleLog = (value) => {
+      console.log(value)
+  } 
+
+  
+  const HandleSubmit = (event) => action((MainStore) => {
+    MainStore.labelStore.updateSubmit();
+    event.preventDefault();
+  })
+  // const cardMemberTryGenerate = CardMembersSearched()
+//Input Place Start
   const resultTagsFromDatafetch = FetchDatafromJson({
     arraySource: tagsProjects,
     resultType: TagsButton,
     resultStyleName: styles.TagsButton,
     Callback: (tagsChecked: Array<string>) => {
       setTagsLists(tagsChecked);
+      projectStore.ProjectData.tags = tagsChecked
     }
   });
 
-
+  
   //Copy this to implement Toggle Button
   const resultToggleButtonCommercialProject = ToggleButtonYesNo({
     getCallback(value) {
@@ -58,52 +163,85 @@ const CreateProject = (_props: Props) => {
     label: "Commercial Project ?"
   })
 
-    //populate and create MultiSelectDropDown with typeWorkProfiles
-    const resultCategoriesFromDatafetch = MultiSelectDropDown({
-      arraySource: typeWorkProfiles,
-      displayName: "name",
-      getSelectedList: (selectedList: Array<string>) => {
-        setTypeSelected(selectedList);
-      }
-    })
-
-
-  
-  const HandleSubmit = (event) => action(() => {
-    MainStore.labelStore.updateSubmit();
-    event.preventDefault();
+  //Copy this to implement Toggle Button
+  const resultToggleButtonSplitSharing = ToggleButtonYesNo({
+    getCallback(value) {
+        projectStore.updateSplitSharing(value) 
+    },
+    label: "Split Sharing ?"
   })
 
+
+  const resultStepperInput = StepperInput({
+    max:100,
+    min:1,
+    getCallBack: (value) => {
+      UpdateCardMemberSearched(value)
+      updateNumberMember(value)
+    }
+  })
+
+//Placeholders place start
+const placeholderForTitle = "Hello i'm your Project Title "
+const placeholderForDescription = "Be catchy and be Smart this is your golden bullet "
+const placeholderForTheme = "Elevator Pitch"
+//Placeholders place end
+
+// LongTextInput place start
+  const resultTitle = longTextInput({
+    placeholder: placeholderForTitle,
+    title: "Title",
+    rowNumber: 2,
+    getCallBack: action((value) => {
+      statesProject.title = value
+    })
+  })
+  const resultTheme = longTextInput({
+    placeholder: placeholderForTheme,
+    title: "Theme",
+    rowNumber: 3,
+    getCallBack: action((value) => {
+      statesProject.theme = value
+    })
+  })
+  const resultDescription = longTextInput({
+    placeholder: placeholderForDescription,
+    title: "Description",
+    rowNumber: 10,
+    getCallBack: action((value) => {
+      statesProject.description = value
+    })
+  })
+// LongTextInput place end
+//Input place end 
   return (
     <>
 
       {/* <form onSubmit={HandleSubmit}> */}
-      <form>
-        <div>Here to create new Project</div>
+        <form>
+        <div className={styles.card}>
+        <div className={styles.elementContainer}>
+        <LabelElement value={"Project Creation"}/>
         <br></br>
-        <LabelInput label="Title"/>
-        
-        <LabelInput label="Description"/>
+        {resultTitle}
+        {/* <LabelInput label="Title"/> */}
+        {resultTheme}
+        {/* <LabelInput label="Description"/> */}
         {/* Is a 150 words Speech to catch users */}
-        <LabelInput label="Theme"/>
+        {resultDescription}
+        {/* <LabelInput label="Theme"/> */}
         
         {resultToggleButtonCommercialProject}
-        
+        {/* {cardMemberTryGenerate} */}
     
-      <p>Tags</p>
+      <LabelElement value={"Tags"}/>
       {resultTagsFromDatafetch}
       <br></br>
-      
-      {/* Need to be replace with toggle button */}
-      <div className={styles.checkBoxx}>
-        <label className={styles.labelCheckBox}>Split Sharing ?</label>
-        <input className={styles.inputCheckBox} type="checkbox" onChange={(e)=>{
-          setSplitSharing(e.target.checked)
-        }}>
-        </input>
 
-      </div>
-      {isSplitSharing ? (<>
+      {/* DO NOT DELETE START */}
+      {/* {resultToggleButtonSplitSharing}
+
+      {projectStore.ProjectData.isSplitSharing ? (<>
       <br />
       <div className={styles.group}>
         <input className={styles.inputText} type="text" required />
@@ -112,12 +250,16 @@ const CreateProject = (_props: Props) => {
         <label className={styles.labelText}>Split Sharing %</label>
       </div>
       </>
-      ) : (<div></div>)}
+      ) : (<div></div>)} */}
 
-      <br></br>
-      <CardMembersSearched>
-        
-      </CardMembersSearched>
+      {/* DO NOT DELETE END */}
+
+      <LabelElement value="Members Number"/>
+      {resultStepperInput}
+{/* .get can access to computed values */}
+      {getArrayMembers.get()}
+
+
       <p>Description</p>
       <input></input>
       <p>Deadline</p>
@@ -143,7 +285,8 @@ const CreateProject = (_props: Props) => {
             <p>Submit</p>
         </button>
       </div>
-
+</div>
+</div>
       </form>
             
     </>
@@ -152,4 +295,4 @@ const CreateProject = (_props: Props) => {
 
 CreateProject.PageLayout = MainLayout;
 
-export default CreateProject;
+export default observer(CreateProject) ;

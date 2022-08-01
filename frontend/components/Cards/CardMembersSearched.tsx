@@ -1,24 +1,23 @@
-import React, { useState } from 'react'
+import React, { Key, useState } from 'react'
 import styles from './styles/CardMemberSearched.module.scss'
 import MultiSelectDropDown from '../styledComponents/MultiSelectDropDown'
 import LabelInput from '../styledComponents/LabelInput'
 import typeWorkProfiles from "../../exemples/typeWorkProfiles.json";
-import {mainStore ,useStoreContainer} from '../../store/MainStore'
-import { observable } from 'mobx';
+import {useStoreContainer} from "../../hooks/useStoreContainer";
+import { action, observable } from 'mobx';
 import {Status} from "../../enums/status";
-type Props = {
+import longTextInput from '../styledComponents/longTextInput';
 
-}
+function  CardMembersSearched (index: number) {
 
-function CardMembersSearched(_props: Props) {
 
-  const MainStore = useStoreContainer()
+  //  const {memberStore} = useStoreContainer()
 
-  const [typeSelected, setTypeSelected] = useState(Array<string>());
-  const [status, setStatus] = useState(Status.Partner)
+  // const [typeSelected, setTypeSelected] = useState(Array<string>());
+  // const [status, setStatus] = useState(Status.Partner)
   const states = observable({
       title:"",
-      typesSelected:typeSelected,
+      typesSelected:new Array<string>,
       status: Status.Partner,
       workLoad: "",
       missionDescription: "",
@@ -36,10 +35,6 @@ const arrayStatus = [{
   // Get a state on Project Store to store all Members Data 
   // Then if Project is Submit catch Data
 
-// implement demain 18.07 La gestion du titre , 
-//Est-ce necessaire d'utiliser Label Input et son store je suis pas sur
-// Potentiellement un input classique stocker dans le store du membre c'est ok !
-// le Css peut ressembler a celui des cards et pas être celui du haut du form 
 
   //implement Set State , setTypeSelected
 
@@ -47,12 +42,13 @@ const arrayStatus = [{
   const resultTypeWorkProfilesFromDatafetch = MultiSelectDropDown({
     arraySource: typeWorkProfiles,
     displayName: "name",
-    getSelectedList: (selectedList: Array<string>) => {
-      setTypeSelected(selectedList);
-    }
+    getSelectedList: action((selectedList: Array<string>) => {
+      console.log("hello im console log from action function in Card member bro")
+      states.typesSelected = selectedList;
+    })
   })
 
-  const placeholderForWorkLoadInput = `make a speech about Implication time and devoted time to project you need,
+const placeholderForWorkLoadInput = `make a speech about Implication time and devoted time to project you need,
 talk about Work Load and Pressure at the beggining is a good way to start a new project 
 `
 
@@ -63,6 +59,7 @@ const placeholderForMissionDescription = `make a speech about what will be the m
 or if it's too generic you can list some of the main tasks,
 Be carefull with the length of the speech, it shouldn't be too long 
 `
+
 const placeholderForSkills = `make a speech about Skills you're waiting for a new Member ,
 To start a new project you need to have members with specifics skills and socials skills, The Type Skills have been selected on top so be innovative ! 
 `
@@ -70,19 +67,30 @@ To start a new project you need to have members with specifics skills and social
     arraySource: arrayStatus ,
     displayName: "name",
     singleSelect:true,
-    getSelectedList: (selectedList: Array<string>) => {
-      setTypeSelected(selectedList);
+    getSelectedList: (selectedList: Array<Status>) => {
+      states.status = selectedList[0];
     }
   })
+
+
+  // 19.07.2022
+  // implement all of the longtextinput and test it on the frontend
+  const resultTitle = longTextInput({
+    placeholder: placeholderForTitle,
+    title: "Title",
+    rowNumber: 2,
+    getCallBack: action((value) => {
+      states.title = value
+    })
+  })
   return (
-        <>
+    
     <div className={styles.card}>
       <div className={styles.elementContainer}>
-    <p className={styles.DescriptionTitle}>
-    Titre
+      <p>
+        {index} 
       </p>
-      <textarea className={styles.LongTextMultiLine} wrap="true" placeholder={placeholderForTitle} rows={2} maxLength={100}>
-          </textarea> 
+      {resultTitle}
         <p className={styles.DescriptionTitle}>
           List Profils : MultiSelect Type Profils
           </p>
@@ -104,7 +112,7 @@ To start a new project you need to have members with specifics skills and social
           </textarea>
       </div>
     </div>
-    </>
+  
   )
 }
 

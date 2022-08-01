@@ -2,6 +2,13 @@
 @import url(https://yarnpkg.com/en/package/normalize.css); 
 @import "cardPaddingPlaceHolder.scss";
 
+
+//use it inside an element:hover
+%hoverForInsideElement{
+        color: #3235d8;
+        border-color: #45467a;
+}
+
 %flex-center{
     display:flex;
     justify-content: center;
@@ -59,7 +66,7 @@
 
 %fontBasicTitle{
     font-family: 'Roboto', sans-serif;
-    font-size: 0.8em;
+    font-size: 0.95em;
     font-weight: bold;
     font-style: normal;
     line-height: 1em;
@@ -69,7 +76,7 @@
 
 %fontTextLongSmall{
     font-family: 'Roboto', sans-serif;
-    font-size: 0.8em;
+    font-size: 0.9em;
     font-weight: normal;
     font-style: normal;
     line-height: 1em;
@@ -98,6 +105,15 @@
 %fontTitle{
     font-family: 'Roboto', sans-serif;
     font-size: 1.2em;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 1;
+    color: #382abb;
+}
+
+%fontTitleHuge{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5em;
     font-weight: bold;
     font-style: normal;
     line-height: 1;

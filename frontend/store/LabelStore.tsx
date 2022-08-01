@@ -42,7 +42,7 @@ import {ILabelStore} from '../interfaces/store/iLabelStore';
   @action
   updateSubmit = () =>
     action(() => {
-      trace();
+      trace(true);
       console.log("hello i'm labelstore i m updatesubmit");
       this.stateLabels.isSubmit = true;
     });
@@ -52,7 +52,7 @@ import {ILabelStore} from '../interfaces/store/iLabelStore';
     reaction(
       () => this.stateLabels.isSubmit,
       (istrue) => {
-        trace();
+        trace(true);
         // Catch Values from all inputs
         console.log(`SubmitFire: ${istrue}`);
         return this.LabelsData

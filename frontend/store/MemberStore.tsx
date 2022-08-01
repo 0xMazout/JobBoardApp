@@ -1,23 +1,29 @@
 import { action, computed, makeAutoObservable, makeObservable, observable, reaction ,autorun, trace} from "mobx";
 import React from "react";
-import {IMember} from '../interfaces/iMember';
+import {IMemberRequest} from '../interfaces/iMemberRequest';
 // type Props = {}
 
  export class MemberStore {
-  arrayMembers = observable({ arraymembers:new Array<IMember>()});
+  updateTitle(value: string) {
+    throw new Error('Method not implemented.');
+  }
+  arrayMembers = observable({ arraymembers:new Array<IMemberRequest>()});
   stateMembers = observable({
     isSubmit: false,
   });
 
+  MemberData : IMemberRequest = {
+    key: 0,
+    title: "" ,
+    typeworkProfiles: new Array<String>,
+    listStatus: new Array<String>,
+    workLoad: "",
+    missionDescription:"", 
+    technicalSocialsSkills:""
+  }
+
   constructor() {
     makeAutoObservable (this)
-    // reaction(
-    //   () => this.arrayMembers.arraymembers,
-    //   (members) => {
-    //     this.data = members;
-    //   }
-    // );
-   // no work here only assignments
   }
 
   // Contains CRUD Store for member
@@ -25,14 +31,14 @@ import {IMember} from '../interfaces/iMember';
     return this.arrayMembers.arraymembers;
   };
   
-  addMember = (member: IMember) => {
+  addMember = action((member: IMemberRequest) => {
     this.arrayMembers.arraymembers.push(member);
     // const members = this.arrayMembers.arraymembers;
-  };
+  });
   @action
-  updatemember = (member: IMember) => {
+  updatemember = (member: IMemberRequest) => {
     const index = this.arrayMembers.arraymembers.findIndex(
-      (item) => item.name === member.name
+      (item) => item.key === member.key
     );
     this.arrayMembers.arraymembers[index] = member;
   }
@@ -41,7 +47,7 @@ import {IMember} from '../interfaces/iMember';
   @action
   updateSubmit = () =>
     action(() => {
-      trace();
+      trace(true);
       console.log("hello i'm memberstore i m updatesubmit");
       this.stateMembers.isSubmit = true;
     });
@@ -51,7 +57,7 @@ import {IMember} from '../interfaces/iMember';
     reaction(
       () => this.stateMembers.isSubmit,
       (istrue) => {
-        trace();
+        trace(true);
         // Catch Values from all inputs
         console.log(`SubmitFire: ${istrue}`);
         return this.arrayMembers

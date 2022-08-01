@@ -1,3 +1,5 @@
+//Start css label
+
 .group 			  { 
     position:relative; 
     margin-bottom:45px; 
@@ -89,3 +91,10 @@
       from { background:#5264AE; }
     to 	{ width:0; background:transparent; }
   }
+
+  //END css label
+
+@import '../../styles/modules/cardPaddingPlaceHolder.scss';
+@import '../../styles/modules/placeholders.scss';
+
+@include CardCenterMainFormatFullCenter

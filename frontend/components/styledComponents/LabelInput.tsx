@@ -4,16 +4,13 @@ import React, { useState } from 'react'
 import styles from './styles/LabelInput.module.scss'
 import LabelStore from '../../store/LabelStore'
 import { ILabel } from '../../interfaces/iLabel'
-import {useStoreContainer} from '../../store/MainStore'
+import {useStoreContainer} from "../../hooks/useStoreContainer";
 
 
 type Props = {
     label: string,
     isNotRequired?: boolean,
 }
-
-type T = any
-
 
 function LabelInput(_props: Props) {
 
@@ -23,12 +20,12 @@ const states = observable({
     value: "",   
     label: _props.label
   })
-  const changeValue = (valueFromInput) => action( state =>{
+  const changeValue = (valueFromInput) => action( states =>{
     states.value = valueFromInput
     // MainStore.labelStore.stateLabels.isSubmit ?
   })
   /// Maybe we can use the loseFocus on input to submit to store 
-  const submitToStore = () => action(() => {
+  const submitToStore = () => action(( MainStore) => {
     MainStore.labelStore.addLabel({
       name: states.label,
       value: states.value,

@@ -14,8 +14,8 @@ configure({
     enforceActions: "always",
     computedRequiresReaction: true,
     reactionRequiresObservable: true,
-    observableRequiresReaction: true,
-    disableErrorBoundaries: true
+    disableErrorBoundaries: true,
+    useProxies: "never"
 })
 
 export interface IStore {
@@ -29,7 +29,7 @@ export const mainStore: IStore = {
   memberStore: new MemberStore()
 };
 export const StoreContext = createContext(mainStore);
-export const useStoreContainer = () =>{
-  // const useStore = useContext(StoreContext);
-  return useContext(StoreContext);
-}
+// export const useStoreContainer = () =>{
+//   // const useStore = useContext(StoreContext);
+//   return useContext(StoreContext);
+// }

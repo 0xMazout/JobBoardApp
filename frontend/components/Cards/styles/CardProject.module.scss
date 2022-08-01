@@ -18,6 +18,8 @@
     border-radius: 10px;
     transition: color 0.15s ease, border-color 0.15s ease;
     width: 35em;
+    min-width: 10em;
+    max-width: 35em;
     // height: 15em;
     min-height: 15em;
     max-height: 35em;

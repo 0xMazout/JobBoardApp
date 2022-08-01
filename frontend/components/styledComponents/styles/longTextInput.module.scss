@@ -2,23 +2,6 @@
 
 @include containFormat;
 
-// .container{
-//   border: 1px solid #eaeaea;
-//   border-radius: 10px;
-//   width: fit-content;
-//   padding: 1rem;
-//   margin: 1rem
-// }
-
-// .container:hover{
-//   color: #3235d8;
-//   border-color: #45467a;
-// }
-
-.labelCheckBox{
-  @extend %fontBold;
-}
-
 .DescriptionTitle{
   @extend %fontBasicTitle;
   grid-area: DescriptionTitle;
@@ -65,8 +48,12 @@
   margin-bottom: 0;
   margin-top: 0;
   margin-right: 0.3em;
-  padding-left: 0.5em;
+  padding-left: 0.7em;
   padding-top: 0.2em;
   // @extend %fontBold;
   @extend %fontTextLongSmall
+}
+
+.LongTextMultiLine:hover{ 
+  @extend %hoverForInsideElement 
 }

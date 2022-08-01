@@ -1,0 +1,54 @@
+/* Actual input */
+
+.inputNumber {
+    position: relative;
+    width: 100px;
+    height: 40px;
+    background-color: rgb(65, 39, 75);
+    // background-color: transparent;
+    overflow: hidden;
+    border-radius: 20px;
+    margin: 2px;
+    margin-bottom: 10px ;
+  }
+  
+  .inputNumber span {
+    position: absolute;
+    left: 50%;
+    margin-left: -20px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.473);
+    height: 100%;
+    width: 40px;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 16px;
+    color: #6C6DFF;
+    letter-spacing: -1px;
+  }
+  
+  .inputNumber button {
+    display: inline-block;
+    width: 50px;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    cursor: pointer;
+    background-color: rgba(255,255,255,.2);
+    transition: background-color .2s ease;
+  }
+  
+  .inputNumber button:nth-of-type(1) {
+    padding-right: 20px
+  }
+  
+  .inputNumber button:nth-of-type(2) {
+    padding-left: 20px;
+  }
+  
+  .inputNumber button:hover {
+    background-color: rgba(255,255,255,.25);
+  }

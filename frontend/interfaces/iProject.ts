@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { IProfil } from "./iProfil";
 
 export interface IProject {
@@ -16,4 +17,5 @@ export interface IProject {
   createdAt: Date;
   updatedAt: Date;
   id: number;
+  arrayMembers: ReactElement[]
 }

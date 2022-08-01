@@ -1,0 +1,9 @@
+@import '../../../styles/modules/placeholders.scss';
+
+.DescriptionTitle{
+    @extend %fontBasicTitle;
+    grid-area: DescriptionTitle;
+    margin-right: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;    
+}

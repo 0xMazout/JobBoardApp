@@ -44,21 +44,12 @@
 
 @include containFormat;
 
-// .container{
-//   border: 1px solid #eaeaea;
-//   border-radius: 10px;
-//   width: fit-content;
-//   padding: 1rem;
-//   margin: 1rem
-// }
-
-// .container:hover{
-//   color: #3235d8;
-//   border-color: #45467a;
-// }
-
 .labelCheckBox{
   @extend %fontBold
+}
+
+.container{
+  margin-left: 0;
 }
 
 .button-cover:before {
