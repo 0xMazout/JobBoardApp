@@ -7,6 +7,7 @@ type Props = {
     displayName:string,
     getSelectedList: (selectedList:Array<any>) => void;
     singleSelect?:boolean;
+    width?:string;
 }
 
 function MultiSelectDropDown(_props: Props) {
@@ -28,7 +29,7 @@ function MultiSelectDropDown(_props: Props) {
     return (
     <div style={{
         display: 'flex',
-        width: "35em",
+        width: _props.width ? _props.width : '35em',
         minWidth:"10em"
     }}>   
          <Multiselect

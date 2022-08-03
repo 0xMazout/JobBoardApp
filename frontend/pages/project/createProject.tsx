@@ -1,10 +1,11 @@
-import React, { JSXElementConstructor, ReactElement, ReactNode, useCallback, useState } from "react";
+import React, { JSXElementConstructor, ReactElement, ReactNode, useCallback, useRef, useState } from "react";
 import MainLayout from "../../components/MainLayout";
 import styles from "../../styles/modules/CreateProject.module.scss";
 import TagsButton from "../../components/styledComponents/TagsButton";
 import { ITags } from "../../interfaces/iTags";
 import { IProject } from "../../interfaces/iProject";
 import tagsProjects from "../../exemples/tagsProjects.json";
+import jsonBlockChainNames from "../../exemples/blockChainNames.json";
 import typeWorkProfiles from "../../exemples/typeWorkProfiles.json";
 import FetchDatafromJson from "../../components/utilityComponents/fetchDatafromJson";
 import MultiSelectDropDown from "../../components/styledComponents/MultiSelectDropDown";
@@ -20,6 +21,8 @@ import StepperInput from "../../components/styledComponents/StepperInput";
 import   {observer} from "mobx-react-lite";
 import longTextInput from "../../components/styledComponents/longTextInput";
 import LabelElement from "../../components/styledComponents/LabelElement";
+import { StatusProject } from "../../enums/statusProject";
+import SubmitButton from "../../components/styledComponents/SubmitButton";
 
 type Props = {
   children: ReactNode;
@@ -32,6 +35,7 @@ const CreateProject = (_props: Props) => {
   const {projectStore,labelStore} = useStoreContainer()
 
 
+  const childRef = useRef();
 
   // tentative 27.07.2022
   // On passe par un array classique et on stock dans cet array de maniere classique on met en observable 
@@ -45,6 +49,8 @@ const CreateProject = (_props: Props) => {
     title:"",
     description:"",
     theme:"",
+    arrayBlockChainNames:new Array<String>,
+    arrayStatusNames:new Array<String>,
   })
   
   const updateNumberMember = action((valueFromInput) =>{
@@ -53,7 +59,11 @@ const CreateProject = (_props: Props) => {
     states.numberMember = valueFromInput
   })
 
-  
+  const arrayStatus = [{
+    "name": StatusProject.ProductLive},{
+    "name": StatusProject.Started},{
+    "name": StatusProject.StartingBlock
+  }]  
 
   // const resultCardsMemberSearched = CardMembersSearched()
 
@@ -112,7 +122,7 @@ const delFromCardMemberArray = action(()=>{
 })
 
 
-const addfromCardMemberArray = action((value)=>{
+const addfromCardMemberArray = action((value: number)=>{
   // console.log(states.arrayMembers)
   console.log("imAddfunction")
   projectStore.ProjectData.arrayMembers.push(CardMembersSearched(value))
@@ -122,13 +132,13 @@ const addfromCardMemberArray = action((value)=>{
   // My problem is how to get length on array observable
   //Creuser Proxy , car l'objet a l'air d'être contenue dans Proxy
   //Proxy est un objet Mobx
-  const UpdateCardMemberSearched = action((value)=>{
+  const UpdateCardMemberSearched = action((value: number)=>{
 
     // mon tableau est un tableau de multiples objets[{...},{...}]
     // console.log(states.arrayMembers.length me donne 1)
     // je cherche a obtenir la valeur de la longueur du tableau observable
 
-  (value < projectStore.ProjectData.arrayMembers.length) ? delFromCardMemberArray() : addfromCardMemberArray(projectStore.ProjectData.arrayMembers.length); 
+  (value < projectStore.ProjectData.arrayMembers.length) ? delFromCardMemberArray() : addfromCardMemberArray(value); 
     runconsoleLog("hello i'm console log from action function")    
   })
 
@@ -142,6 +152,12 @@ const addfromCardMemberArray = action((value)=>{
     MainStore.labelStore.updateSubmit();
     event.preventDefault();
   })
+
+  //Here we take datas from store and put it into DB
+  //We launch process and when we get a response we update button status ui
+  const submitThisForm = () => {
+
+  }
   // const cardMemberTryGenerate = CardMembersSearched()
 //Input Place Start
   const resultTagsFromDatafetch = FetchDatafromJson({
@@ -164,12 +180,12 @@ const addfromCardMemberArray = action((value)=>{
   })
 
   //Copy this to implement Toggle Button
-  const resultToggleButtonSplitSharing = ToggleButtonYesNo({
-    getCallback(value) {
-        projectStore.updateSplitSharing(value) 
-    },
-    label: "Split Sharing ?"
-  })
+  // const resultToggleButtonSplitSharing = ToggleButtonYesNo({
+  //   getCallback(value) {
+  //       projectStore.updateSplitSharing(value) 
+  //   },
+  //   label: "Split Sharing ?"
+  // })
 
 
   const resultStepperInput = StepperInput({
@@ -179,6 +195,26 @@ const addfromCardMemberArray = action((value)=>{
       UpdateCardMemberSearched(value)
       updateNumberMember(value)
     }
+  })
+
+  const resultBlockChainNames = MultiSelectDropDown({
+    arraySource: jsonBlockChainNames ,
+    displayName: "name",
+    singleSelect:true,
+    getSelectedList: action((selectedList: Array<String>) => {
+      statesProject.arrayBlockChainNames = selectedList;
+    }),
+    width:"20em"
+  })
+
+  const resultStatusName = MultiSelectDropDown({
+    arraySource: arrayStatus ,
+    displayName: "name",
+    singleSelect:true,
+    getSelectedList: action((selectedList: Array<String>) => {
+      statesProject.arrayBlockChainNames = selectedList;
+    }),
+    width:"20em"
   })
 
 //Placeholders place start
@@ -221,7 +257,10 @@ const placeholderForTheme = "Elevator Pitch"
         <form>
         <div className={styles.card}>
         <div className={styles.elementContainer}>
-        <LabelElement value={"Project Creation"}/>
+        <h2 className={styles.mainTitleCard}>
+          Project Creation
+        </h2>
+        {/* <LabelElement value={"Project Creation"}/> */}
         <br></br>
         {resultTitle}
         {/* <LabelInput label="Title"/> */}
@@ -231,7 +270,22 @@ const placeholderForTheme = "Elevator Pitch"
         {resultDescription}
         {/* <LabelInput label="Theme"/> */}
         
-        {resultToggleButtonCommercialProject}
+        <div className={styles.containerElement}>
+          <div className={styles.labelsColumns}>
+          <LabelElement value={"Blockchain"}/>
+          <br></br>
+          <LabelElement value={"Status"}/>
+          </div>
+          <div className={styles.elementFromContainer}>
+            <div className={styles.labelsColumns}>
+            {resultBlockChainNames}
+              <div className={styles.labelNumber2}>
+              {resultStatusName}
+              </div>
+            </div>
+            {resultToggleButtonCommercialProject}
+          </div>
+        </div>
         {/* {cardMemberTryGenerate} */}
     
       <LabelElement value={"Tags"}/>
@@ -258,33 +312,16 @@ const placeholderForTheme = "Elevator Pitch"
       {resultStepperInput}
 {/* .get can access to computed values */}
       {getArrayMembers.get()}
-
-
-      <p>Description</p>
-      <input></input>
-      <p>Deadline</p>
-      <input></input>
-      <p>Status</p>
-      <input></input>
-      <p>Team</p>
-      <input></input>
-      <p>Theme</p>
-      <input>{/* Is a List with Multiple choices 1 to 3 */}</input>
-      <p>Category</p>
-      <input></input>
-      
-      <p>Blockchain</p>
-      <input></input>
-
-      <div>
+      {/* <div>
         <button className={styles.SubmitButton} type='submit' onClick={
           (evt) => {
             HandleSubmit(evt)
           }
         }>
-            <p>Submit</p>
+
         </button>
-      </div>
+      </div> */}
+      <SubmitButton getClickOnSubmit={submitThisForm} childRef={childRef}></SubmitButton>
 </div>
 </div>
       </form>

@@ -5,11 +5,12 @@ import LabelInput from '../styledComponents/LabelInput'
 import typeWorkProfiles from "../../exemples/typeWorkProfiles.json";
 import {useStoreContainer} from "../../hooks/useStoreContainer";
 import { action, observable } from 'mobx';
-import {Status} from "../../enums/status";
+import {StatusMember} from "../../enums/statusMember";
 import longTextInput from '../styledComponents/longTextInput';
 
-function  CardMembersSearched (index: number) {
+function  CardMembersSearched (index?: number) {
 
+  // console.log(index)
 
   //  const {memberStore} = useStoreContainer()
 
@@ -18,18 +19,19 @@ function  CardMembersSearched (index: number) {
   const states = observable({
       title:"",
       typesSelected:new Array<string>,
-      status: Status.Partner,
+      StatusMember: StatusMember.Partner,
       workLoad: "",
       missionDescription: "",
       skills: "",
+      index: index
   })
 // got a problem on the value 
 const arrayStatus = [{
-  "name": Status.Partner},{
-  "name": Status.ServiceProvider},{
-  "name": Status.TeamMember
+  "name": StatusMember.Partner},{
+  "name": StatusMember.ServiceProvider},{
+  "name": StatusMember.TeamMember
 }]
-  // const arrayStatus = [Status.Partner, Status.ServiceProvider, Status.TeamMember]
+  // const arrayStatusMember = [StatusMember.Partner, StatusMember.ServiceProvider, StatusMember.TeamMember]
   //implement Member Store class
   // implement Member Entity on each count to store Data
   // Get a state on Project Store to store all Members Data 
@@ -63,12 +65,12 @@ Be carefull with the length of the speech, it shouldn't be too long
 const placeholderForSkills = `make a speech about Skills you're waiting for a new Member ,
 To start a new project you need to have members with specifics skills and socials skills, The Type Skills have been selected on top so be innovative ! 
 `
-  const resultStatus = MultiSelectDropDown({
+  const resultStatusMember = MultiSelectDropDown({
     arraySource: arrayStatus ,
     displayName: "name",
     singleSelect:true,
-    getSelectedList: (selectedList: Array<Status>) => {
-      states.status = selectedList[0];
+    getSelectedList: (selectedList: Array<StatusMember>) => {
+      states.StatusMember = selectedList[0];
     }
   })
 
@@ -88,7 +90,7 @@ To start a new project you need to have members with specifics skills and social
     <div className={styles.card}>
       <div className={styles.elementContainer}>
       <p>
-        {index} 
+
       </p>
       {resultTitle}
         <p className={styles.DescriptionTitle}>
@@ -96,9 +98,9 @@ To start a new project you need to have members with specifics skills and social
           </p>
           {resultTypeWorkProfilesFromDatafetch}
         <p className={styles.DescriptionTitle}>
-          List Status
+          Status
           </p> 
-          {resultStatus}
+          {resultStatusMember}
         <div className={styles.Separator}>
           </div>
           <p className={styles.DescriptionTitle}>Work Load</p>

@@ -48,3 +48,43 @@
         margin:auto
     }
 }
+
+@mixin GroupElementCenter{
+
+    .containerElement{
+        display: flex;
+        flex-wrap: wrap;
+        margin:auto;
+        margin-top: 1em;
+        //design
+        border: 1px solid #eaeaea;
+        border-radius: 10px;
+        transition: color 0.15s ease, border-color 0.15s ease;
+    }
+    .containerElement:hover{
+        //Need to update because if i Use color it change the selected value 
+        color: #3235d8;
+        border-color: #45467a;
+    }
+    .elementFromContainer{
+        display: flex;
+        flex: 1 0 0 33%;
+        box-sizing: content-box;
+        flex-direction: row;
+        flex-wrap: wrap;
+        flex-flow: row;
+        margin-left: 1em;
+        width: fit-content;
+    }
+    .labelsColumns{
+        display: flexbox;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-left: 1em;
+        margin-top: 1em;
+        text-align: center;
+    }
+    .labelNumber2{
+        margin-top: 1.5em;
+    }
+}

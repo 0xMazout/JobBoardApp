@@ -5,6 +5,11 @@ import styles from "../Cards/styles/CardProject.module.scss";
 import logo from "../../public/1200px-The_Event_2010_Intertitle.svg.png";
 
 const CardProject = (_props: any) => {
+
+  const getIsCommercial = () => {
+    return _props.arrayItem.isCommercial ? "Commercial" : "Learning";
+  }
+
   return (
     <>
       <div className={styles.card}>
@@ -17,7 +22,7 @@ const CardProject = (_props: any) => {
               layout="responsive"
             />
           </div>
-          <p className={styles.ProOrLearn}>Professional or Learning</p>
+          <p className={styles.ProOrLearn}>{getIsCommercial()}</p>
           <p className={styles.isProjectLive}>Live or New</p>
           <p className={styles.SocialsTab}>Socials</p>
           <p className={styles.SocialsIcons}>Socials Icons</p>

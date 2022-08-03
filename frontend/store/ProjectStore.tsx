@@ -11,7 +11,7 @@ export class ProjectStore {
   constructor() {
     makeAutoObservable (this),
     this.ProjectData
-    this.ProjectData.arrayMembers.push(CardMembersSearched())
+    this.ProjectData.arrayMembers.push(CardMembersSearched(1))
   }
   
   ProjectData : IProject = {

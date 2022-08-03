@@ -94,7 +94,13 @@
 
   //END css label
 
+.mainTitleCard{
+    @extend %fontTitleMain;
+    // margin-bottom: 1em;
+}
+
 @import '../../styles/modules/cardPaddingPlaceHolder.scss';
 @import '../../styles/modules/placeholders.scss';
 
-@include CardCenterMainFormatFullCenter
+@include CardCenterMainFormatFullCenter;
+@include GroupElementCenter
