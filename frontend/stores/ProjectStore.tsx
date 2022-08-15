@@ -2,18 +2,27 @@ import { makeAutoObservable } from 'mobx'
 import React, { ReactElement } from 'react'
 import { arrayBuffer } from 'stream/consumers'
 import CardMembersSearched from '../components/Cards/CardMembersSearched'
+import { IMemberRequest } from '../interfaces/iMemberRequest'
 import { IProject } from '../interfaces/iProject'
+import MemberStore from './MemberStore'
+import RootStore from './RootStore'
+import {RootStoreBis} from './RootStoreBis'
+import { action, observable } from 'mobx';
 
 type Props = {}
 
 export class ProjectStore {
-
-  constructor() {
-    makeAutoObservable (this),
-    this.ProjectData
-    this.ProjectData.arrayMembers.push(CardMembersSearched(1))
+  memberStore: MemberStore
+  root: RootStoreBis
+  constructor(rootStore: RootStoreBis) {
+    this.root = rootStore;
+    this.memberStore = new MemberStore(rootStore);
+    makeAutoObservable (this)
+    this.ProjectData.arrayMembers.push(CardMembersSearched(this,1))
   }
   
+  isSubmit:boolean = false;
+
   ProjectData : IProject = {
     title: "", // string
     theme: "", // string
@@ -25,12 +34,13 @@ export class ProjectStore {
     isSplitSharing: false, // boolean
     isCommercial: false, // boolean
     members: new Array<number>, // array of strings
-    membersWanted: new Array<string>, // array of strings
+    membersWanted: new Array<IMemberRequest>, // array of strings
     blockChain: "", // string
     createdAt: new Date, // string
     updatedAt: new Date, // string
     id: 0, // number
-    arrayMembers: new Array<ReactElement>
+    arrayMembers: new Array<ReactElement>,
+    status: "", // string
   }
   
 
@@ -42,6 +52,15 @@ export class ProjectStore {
 
   // Contains CRUD Store for Project
   
+  updateProjectTitle(title: string) {
+    this.ProjectData.title = title;
+  }
+  AddMembersWanted (memberWanted: IMemberRequest) { 
+    this.ProjectData.membersWanted.push(memberWanted);
+  }
+
+
+
   updateCommercialProject(checked: boolean) {
     this.ProjectData.isCommercial = checked;
   }

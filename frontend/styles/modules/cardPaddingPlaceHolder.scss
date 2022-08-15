@@ -74,7 +74,8 @@
         flex-wrap: wrap;
         flex-flow: row;
         margin-left: 1em;
-        width: fit-content;
+        min-width: 15em;
+        max-width: 35em;
     }
     .labelsColumns{
         display: flexbox;

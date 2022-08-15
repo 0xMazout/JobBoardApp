@@ -2,6 +2,7 @@ import { action, computed, makeAutoObservable, makeObservable, observable, react
 import React from "react";
 import { ILabel } from "../interfaces/iLabel";
 import {ILabelStore} from '../interfaces/store/iLabelStore';
+import RootStore from "./RootStore";
 // type Props = {}
 
  export class LabelStore {
@@ -10,7 +11,7 @@ import {ILabelStore} from '../interfaces/store/iLabelStore';
     isSubmit: false,
   });
 
-  constructor() {
+  constructor(root?: RootStore) {
     makeAutoObservable (this)
     // reaction(
     //   () => this.LabelsData.arrayLabels,

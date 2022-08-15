@@ -3,33 +3,39 @@ import styles from './styles/CardMemberSearched.module.scss'
 import MultiSelectDropDown from '../styledComponents/MultiSelectDropDown'
 import LabelInput from '../styledComponents/LabelInput'
 import typeWorkProfiles from "../../exemples/typeWorkProfiles.json";
-import {useStoreContainer} from "../../hooks/useStoreContainer";
+
 import { action, observable } from 'mobx';
 import {StatusMember} from "../../enums/statusMember";
 import longTextInput from '../styledComponents/longTextInput';
+import ProjectStore from '../../stores/ProjectStore';
+import { IMemberRequest } from '../../interfaces/iMemberRequest';
 
-function  CardMembersSearched (index?: number) {
-
-  // console.log(index)
-
-  //  const {memberStore} = useStoreContainer()
-
-  // const [typeSelected, setTypeSelected] = useState(Array<string>());
-  // const [status, setStatus] = useState(Status.Partner)
-  const states = observable({
-      title:"",
-      typesSelected:new Array<string>,
-      StatusMember: StatusMember.Partner,
-      workLoad: "",
-      missionDescription: "",
-      skills: "",
-      index: index
+const CardMembersSearched = (store:ProjectStore, key?: number) => {
+  const index = key ? key : 0;
+  const states : IMemberRequest = {
+    key: index,
+    title:"",
+    typeworkProfiles:new Array<string>,
+    StatusMember: StatusMember.Partner,
+    workLoad: "",
+    missionDescription: "",
+    technicalSocialsSkills: "",
+  }
+  
+  const initialize = action(() => {
+    store.AddMembersWanted(states);
   })
+  
+  //Initialize the store when the component is mounted if it has not been intialized yet
+  if(!store.ProjectData.arrayMembers[index]){
+    initialize();
+  }
+  // initialize()
 // got a problem on the value 
 const arrayStatus = [{
   "name": StatusMember.Partner},{
   "name": StatusMember.ServiceProvider},{
-  "name": StatusMember.TeamMember
+  "name": StatusMember.TeamMember,
 }]
   // const arrayStatusMember = [StatusMember.Partner, StatusMember.ServiceProvider, StatusMember.TeamMember]
   //implement Member Store class
@@ -46,7 +52,7 @@ const arrayStatus = [{
     displayName: "name",
     getSelectedList: action((selectedList: Array<string>) => {
       console.log("hello im console log from action function in Card member bro")
-      states.typesSelected = selectedList;
+      store.ProjectData.membersWanted[index].typeworkProfiles = selectedList;
     })
   })
 
@@ -70,7 +76,7 @@ To start a new project you need to have members with specifics skills and social
     displayName: "name",
     singleSelect:true,
     getSelectedList: (selectedList: Array<StatusMember>) => {
-      states.StatusMember = selectedList[0];
+    store.ProjectData.membersWanted[index].StatusMember = selectedList[0];
     }
   })
 
@@ -82,19 +88,40 @@ To start a new project you need to have members with specifics skills and social
     title: "Title",
     rowNumber: 2,
     getCallBack: action((value) => {
-      states.title = value
+    store.ProjectData.membersWanted[index].title = value
+    })
+  })
+  const resultWorkLoad = longTextInput({
+    placeholder: placeholderForWorkLoadInput,
+    title: "Work Load",
+    rowNumber: 6,
+    getCallBack: action((value) => {
+    store.ProjectData.membersWanted[index].workLoad = value
+    })
+  })
+  const resultMissionDescription = longTextInput({
+    placeholder: placeholderForMissionDescription,
+    title: "Mission Description",
+    rowNumber: 6,
+    getCallBack: action((value) => {
+    store.ProjectData.membersWanted[index].missionDescription = value
+    })
+  })
+  const resultTechnicalSkills = longTextInput({
+    placeholder: placeholderForSkills,
+    title: "Technical Skills / Socials Skills",
+    rowNumber: 6,
+    getCallBack: action((value) => {
+     store.ProjectData.membersWanted[index].technicalSocialsSkills = value
     })
   })
   return (
-    
+    <>
     <div className={styles.card}>
       <div className={styles.elementContainer}>
-      <p>
-
-      </p>
       {resultTitle}
         <p className={styles.DescriptionTitle}>
-          List Profils : MultiSelect Type Profils
+          Work Profile
           </p>
           {resultTypeWorkProfilesFromDatafetch}
         <p className={styles.DescriptionTitle}>
@@ -103,7 +130,10 @@ To start a new project you need to have members with specifics skills and social
           {resultStatusMember}
         <div className={styles.Separator}>
           </div>
-          <p className={styles.DescriptionTitle}>Work Load</p>
+          {resultWorkLoad}
+          {resultMissionDescription}
+          {resultTechnicalSkills}
+          {/* <p className={styles.DescriptionTitle}>Work Load</p>
           <textarea className={styles.LongTextMultiLine} wrap="true" placeholder={placeholderForWorkLoadInput} rows={6}>
           </textarea>
           <p className={styles.DescriptionTitle}>Mission Description</p>
@@ -111,10 +141,10 @@ To start a new project you need to have members with specifics skills and social
           </textarea>
           <p className={styles.DescriptionTitle}>Technical Skills / Socials Skills</p>
           <textarea className={styles.LongTextMultiLine} wrap="true" placeholder={placeholderForSkills} rows={6}>
-          </textarea>
+          </textarea> */}
       </div>
     </div>
-  
+  </>
   )
 }
 

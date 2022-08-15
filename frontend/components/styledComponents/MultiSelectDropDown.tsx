@@ -29,8 +29,9 @@ function MultiSelectDropDown(_props: Props) {
     return (
     <div style={{
         display: 'flex',
-        width: _props.width ? _props.width : '35em',
-        minWidth:"10em"
+        minWidth:_props.width ? _props.width : '15em',
+        maxWidth:"35em",
+
     }}>   
          <Multiselect
     options={_props.arraySource} // Options to display in the dropdown

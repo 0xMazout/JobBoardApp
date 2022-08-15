@@ -18,18 +18,18 @@ configure({
     useProxies: "never"
 })
 
-export interface IStore {
-  labelStore: LabelStore;
-  projectStore: ProjectStore;
-  memberStore: MemberStore;
-}
-export const mainStore: IStore = {
-  labelStore: new LabelStore(),
-  projectStore: new ProjectStore(),
-  memberStore: new MemberStore()
-};
-export const StoreContext = createContext(mainStore);
-// export const useStoreContainer = () =>{
-//   // const useStore = useContext(StoreContext);
-//   return useContext(StoreContext);
+// export interface IStore {
+//   labelStore: LabelStore;
+//   projectStore: ProjectStore;
+//   memberStore: MemberStore;
 // }
+// export const mainStore: IStore = {
+//   labelStore: new LabelStore(),
+//   projectStore: new ProjectStore(),
+//   memberStore: new MemberStore()
+// };
+// export const StoreContext = createContext(mainStore);
+// // export const useStoreContainer = () =>{
+// //   // const useStore = useContext(StoreContext);
+// //   return useContext(StoreContext);
+// // }

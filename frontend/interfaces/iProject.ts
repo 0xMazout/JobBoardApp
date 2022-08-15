@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { IProfil } from "./iProfil";
+import { IMemberRequest } from "./iMemberRequest";
 
 export interface IProject {
   title: string;
@@ -11,11 +12,12 @@ export interface IProject {
   typeWork: string;
   isSplitSharing: boolean;
   isCommercial: boolean;
-  members: number[]; //Actually contain id team number //IProfil
-  membersWanted: string[];
+  status: string;
+  members?: number[]; //Actually contain id team number //IProfil
+  membersWanted: IMemberRequest[];
   blockChain: string;
   createdAt: Date;
   updatedAt: Date;
   id: number;
-  arrayMembers: ReactElement[]
+  arrayMembers: ReactElement[];
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 export enum StatusMember {
-    Partner = 'Partner',
-    ServiceProvider = 'ServiceProvider',
-    TeamMember = 'TeamMember',
+    Partner = 'Co-Founder',
+    ServiceProvider = 'Service Provider',
+    TeamMember = 'Team Member',
 }

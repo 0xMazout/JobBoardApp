@@ -24,7 +24,7 @@
   margin-right: 0.2em;
   padding-left: 0.2em;
   padding-top: 0.2em;
-  border: #eaeaea 1px solid;    
+  border: #af1010 1px solid;    
   border-radius: 10px;
   box-sizing: border-box;
   white-space: nowrap;
@@ -42,7 +42,8 @@
   -webkit-line-clamp: 5;   
   -webkit-box-orient: vertical;     
   overflow: hidden;
-  width: 100%; 
+  width: 100%;
+  min-width: none; 
   border: #eaeaea 1px solid;    
   border-radius: 20px;
   margin-bottom: 0;
@@ -50,6 +51,7 @@
   margin-right: 0.3em;
   padding-left: 0.7em;
   padding-top: 0.2em;
+  box-sizing: border-box;
   // @extend %fontBold;
   @extend %fontTextLongSmall
 }

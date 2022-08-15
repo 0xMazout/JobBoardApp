@@ -1,13 +1,16 @@
 import { action, computed, makeAutoObservable, makeObservable, observable, reaction ,autorun, trace} from "mobx";
 import React from "react";
 import {IMemberRequest} from '../interfaces/iMemberRequest';
+import RootStore from "./RootStore";
+import { RootStoreBis } from "./RootStoreBis";
 // type Props = {}
 
  export class MemberStore {
+  root: RootStoreBis
   updateTitle(value: string) {
     throw new Error('Method not implemented.');
   }
-  arrayMembers = observable({ arraymembers:new Array<IMemberRequest>()});
+  arrayMembersRequest = observable({ arrayMembersRequest:new Array<IMemberRequest>()});
   stateMembers = observable({
     isSubmit: false,
   });
@@ -16,31 +19,32 @@ import {IMemberRequest} from '../interfaces/iMemberRequest';
     key: 0,
     title: "" ,
     typeworkProfiles: new Array<String>,
-    listStatus: new Array<String>,
+    StatusMember: "",
     workLoad: "",
     missionDescription:"", 
     technicalSocialsSkills:""
   }
 
-  constructor() {
+  constructor(root: RootStoreBis) {
     makeAutoObservable (this)
+    this.root = root
   }
 
   // Contains CRUD Store for member
   getMembers = () => {
-    return this.arrayMembers.arraymembers;
+    return this.arrayMembersRequest.arrayMembersRequest;
   };
   
   addMember = action((member: IMemberRequest) => {
-    this.arrayMembers.arraymembers.push(member);
-    // const members = this.arrayMembers.arraymembers;
+    this.arrayMembersRequest.arrayMembersRequest.push(member);
+    // const members = this.arrayMembersRequest.arrayMembersRequest;
   });
   @action
   updatemember = (member: IMemberRequest) => {
-    const index = this.arrayMembers.arraymembers.findIndex(
+    const index = this.arrayMembersRequest.arrayMembersRequest.findIndex(
       (item) => item.key === member.key
     );
-    this.arrayMembers.arraymembers[index] = member;
+    this.arrayMembersRequest.arrayMembersRequest[index] = member;
   }
 
   //Trigerred when the user submits the form
@@ -60,7 +64,7 @@ import {IMemberRequest} from '../interfaces/iMemberRequest';
         trace(true);
         // Catch Values from all inputs
         console.log(`SubmitFire: ${istrue}`);
-        return this.arrayMembers
+        return this.arrayMembersRequest
       }
     );
 

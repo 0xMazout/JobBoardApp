@@ -11,8 +11,8 @@ import FetchDatafromJson from "../../components/utilityComponents/fetchDatafromJ
 import MultiSelectDropDown from "../../components/styledComponents/MultiSelectDropDown";
 import Link from "next/link";
 import LabelInput from "../../components/styledComponents/LabelInput";
-import {mainStore } from "../../store/MainStore";
-import {useStoreContainer} from "../../hooks/useStoreContainer";
+// import {mainStore } from "../../store/MainStore";
+// import {useStoreContainer} from "../../hooks/useStoreContainer";
 import { action, computed, get, makeAutoObservable, observable, reaction, set } from "mobx";
 import { Observer, useLocalObservable } from "mobx-react";
 import CardMembersSearched from '../../components/Cards/CardMembersSearched'
@@ -23,18 +23,26 @@ import longTextInput from "../../components/styledComponents/longTextInput";
 import LabelElement from "../../components/styledComponents/LabelElement";
 import { StatusProject } from "../../enums/statusProject";
 import SubmitButton from "../../components/styledComponents/SubmitButton";
+// import { useProjectStore, useMemberStore } from "../../components/utilityComponents/rootStoreProvider";
+import {useProjectStore} from "../../providers/RootStoreProvider";
+// import { useRootPatternStore } from "../../components/utilityComponents/RootStateContext";
 
 type Props = {
   children: ReactNode;
 };
 
 const CreateProject = (_props: Props) => {
-  const [isSplitSharing, setSplitSharing] = useState(false);
-  const [tagsLists, setTagsLists] = useState(Array<string>());
+  // const [isSplitSharing, setSplitSharing] = useState(false);
+  // const [tagsLists, setTagsLists] = useState(Array<string>());
   // const [tabofMembers, setTabofMembers] = useState(Array<ReactElement>)
-  const {projectStore,labelStore} = useStoreContainer()
+  // const rootStore = useRootStore()
+  // const memberStore = useMemberStore()
+  //  const  projectStore  = useRootStore()
+const projectStore = useProjectStore();
+  //  console.log(projectStore);
+  // const {rootStore,labelStore} = useStoreContainer()
 
-
+  
   const childRef = useRef();
 
   // tentative 27.07.2022
@@ -42,8 +50,9 @@ const CreateProject = (_props: Props) => {
   // numberMember pour s'en servir pour regénerer a chaque fois l'array et le display quand numbermember change 
   const states = observable({
     numberMember: 1,
-    arrayMembers:[CardMembersSearched(1)]
+    arrayMembers:[CardMembersSearched(projectStore,1)]
   })
+
 
   const statesProject = observable({
     title:"",
@@ -51,21 +60,26 @@ const CreateProject = (_props: Props) => {
     theme:"",
     arrayBlockChainNames:new Array<String>,
     arrayStatusNames:new Array<String>,
+    tagsLists:new Array<String>,
+
   })
   
   const updateNumberMember = action((valueFromInput) =>{
     // trace(true);
     console.log("im updateNumberMember")
+    // console.log(rootStore)
     states.numberMember = valueFromInput
   })
 
   const arrayStatus = [{
     "name": StatusProject.ProductLive},{
     "name": StatusProject.Started},{
-    "name": StatusProject.StartingBlock
+    "name": StatusProject.StartingBlock},{
+    "name": StatusProject.MarketStudy
   }]  
 
-  // const resultCardsMemberSearched = CardMembersSearched()
+
+
 
   //26.07.2022
   // lire ce qu'il y a plus  bas LFA 
@@ -75,13 +89,10 @@ const CreateProject = (_props: Props) => {
   // Renvoie un mapping de arrayMembers
   const getArrayMembers = computed(() => {
     states.numberMember
-    return projectStore.ProjectData.arrayMembers.map(() => React.createElement(CardMembersSearched))
+    return projectStore.ProjectData.arrayMembers.map((_a,indexx)=>CardMembersSearched(projectStore,indexx))
   }
   );
   
-  const newTab = observable({
-    arrayOfCardMember : []
-  })
 
   //la solution est ici computed ou reaction pour observer les changements d'arrayMembers
   // On affiche bien le premier coup mais on ne peut pas ajouter de cards ca ne se met pas a jour
@@ -114,8 +125,7 @@ const CreateProject = (_props: Props) => {
 // )
 
 
-const delFromCardMemberArray = action(()=>{
-  newTab.arrayOfCardMember.splice(newTab.arrayOfCardMember.length)
+const delFromCardMemberArray = action(()=>{ 
   projectStore.ProjectData.arrayMembers.splice(projectStore.ProjectData.arrayMembers.length-1)
   // states.arrayMembers.splice(states.arrayMembers.length);
   console.log("imdelfunction")
@@ -125,23 +135,19 @@ const delFromCardMemberArray = action(()=>{
 const addfromCardMemberArray = action((value: number)=>{
   // console.log(states.arrayMembers)
   console.log("imAddfunction")
-  projectStore.ProjectData.arrayMembers.push(CardMembersSearched(value))
+  projectStore.ProjectData.arrayMembers.push(CardMembersSearched(projectStore,value))
 
 });
   //IT WORKED ACTION IS LIKE THIS !!
-  // My problem is how to get length on array observable
-  //Creuser Proxy , car l'objet a l'air d'être contenue dans Proxy
-  //Proxy est un objet Mobx
   const UpdateCardMemberSearched = action((value: number)=>{
-
-    // mon tableau est un tableau de multiples objets[{...},{...}]
-    // console.log(states.arrayMembers.length me donne 1)
-    // je cherche a obtenir la valeur de la longueur du tableau observable
 
   (value < projectStore.ProjectData.arrayMembers.length) ? delFromCardMemberArray() : addfromCardMemberArray(value); 
     runconsoleLog("hello i'm console log from action function")    
   })
 
+  const UpdateCardTagsList = action((tagsChecked: Array<string>)=>{
+  statesProject.tagsLists = tagsChecked
+  })
 
   const runconsoleLog = (value) => {
       console.log(value)
@@ -156,7 +162,12 @@ const addfromCardMemberArray = action((value: number)=>{
   //Here we take datas from store and put it into DB
   //We launch process and when we get a response we update button status ui
   const submitThisForm = () => {
-
+      statesProject.title = projectStore.ProjectData.title;
+      statesProject.description = projectStore.ProjectData.description;
+      statesProject.theme = projectStore.ProjectData.theme;
+      statesProject.arrayBlockChainNames[0] = projectStore.ProjectData.blockChain;
+      statesProject.arrayStatusNames[0] = projectStore.ProjectData.status;
+      statesProject.tagsLists = projectStore.ProjectData.tags;
   }
   // const cardMemberTryGenerate = CardMembersSearched()
 //Input Place Start
@@ -165,7 +176,7 @@ const addfromCardMemberArray = action((value: number)=>{
     resultType: TagsButton,
     resultStyleName: styles.TagsButton,
     Callback: (tagsChecked: Array<string>) => {
-      setTagsLists(tagsChecked);
+      UpdateCardTagsList(tagsChecked);
       projectStore.ProjectData.tags = tagsChecked
     }
   });
@@ -174,7 +185,7 @@ const addfromCardMemberArray = action((value: number)=>{
   //Copy this to implement Toggle Button
   const resultToggleButtonCommercialProject = ToggleButtonYesNo({
     getCallback(value) {
-        mainStore.projectStore.updateCommercialProject(value) 
+        projectStore.updateCommercialProject(value) 
     },
     label: "Commercial Project ?"
   })
@@ -269,7 +280,6 @@ const placeholderForTheme = "Elevator Pitch"
         {/* Is a 150 words Speech to catch users */}
         {resultDescription}
         {/* <LabelInput label="Theme"/> */}
-        
         <div className={styles.containerElement}>
           <div className={styles.labelsColumns}>
           <LabelElement value={"Blockchain"}/>

@@ -2,9 +2,10 @@ import { action , observable, when } from 'mobx'
 import { observer } from "mobx-react-lite"
 import React, { useState } from 'react'
 import styles from './styles/LabelInput.module.scss'
-import LabelStore from '../../store/LabelStore'
+import LabelStore from '../../stores/LabelStore'
 import { ILabel } from '../../interfaces/iLabel'
-import {useStoreContainer} from "../../hooks/useStoreContainer";
+import { useProjectStore } from '../../providers/RootStoreProvider'
+
 
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
 
 function LabelInput(_props: Props) {
 
-const MainStore = useStoreContainer()
+const MainStore = useProjectStore()
   // const [value, setValue] = useState(String)
 const states = observable({
     value: "",   
@@ -32,7 +33,7 @@ const states = observable({
     }as ILabel)
   });
   
-  when(() => MainStore.labelStore.stateLabels.isSubmit, () => {
+  when(() => MainStore.isSubmit, () => {
     console.log("hello i'm submit")
     submitToStore()
   })
