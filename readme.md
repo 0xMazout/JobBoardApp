@@ -1,4 +1,4 @@
-# BookingEventApp
+# Builders App
 
 This Repo will contain a Job Board App / Member Seeking App
 
