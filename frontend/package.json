@@ -11,6 +11,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
+    "graphql": "^16.6.0",
     "mobx": "^6.6.1",
     "mobx-react": "^7.5.2",
     "multiselect-react-dropdown": "^2.0.25",

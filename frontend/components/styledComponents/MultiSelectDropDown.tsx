@@ -8,6 +8,7 @@ type Props = {
     getSelectedList: (selectedList:Array<any>) => void;
     singleSelect?:boolean;
     width?:string;
+    selectionLimit?:number;
 }
 
 function MultiSelectDropDown(_props: Props) {
@@ -31,15 +32,15 @@ function MultiSelectDropDown(_props: Props) {
         display: 'flex',
         minWidth:_props.width ? _props.width : '15em',
         maxWidth:"35em",
-
     }}>   
-         <Multiselect
+        <Multiselect
     options={_props.arraySource} // Options to display in the dropdown
     // selectedValues={state.selectedValue} // Preselected value to persist in dropdown
     onSelect={onSelect} // Function will trigger on select event
     onRemove={onRemove} // Function will trigger on remove event
     displayValue={_props.displayName} // Property name to display in the dropdown options
     singleSelect={_props.singleSelect? true : false}
+    selectionLimit={_props.selectionLimit ? _props.selectionLimit : -1}
     style={{
         chips:{
             background: "#5212a5",

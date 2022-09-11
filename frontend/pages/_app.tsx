@@ -6,6 +6,7 @@ import type { NextPage } from "next";
 // import { RootStoreProvider } from "../components/utilityComponents/rootStoreProvider";
 import { getStores, RootStoreProvider } from "../providers/RootStoreProvider";
 // import { RootStateContext, RootStateProvider } from "../components/utilityComponents/RootStateContext";
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -21,14 +22,25 @@ type ComponentWithPageLayout = AppProps & {
   };
 };
 
+const Apollo = () =>{
+  const client = new ApolloClient({
+    uri: 'http://localhost:5000/graphql',
+    cache: new InMemoryCache()
+  });
+  return (client)
+}
+
 export default function MyApp({
   Component,
   pageProps,
 }: ComponentWithPageLayout) {
 
+  
+
   // const stores = getstores()
   return (
     <>
+    <ApolloProvider client={Apollo()}>
       {Component.PageLayout ? (
         <Component.PageLayout>
           <RootStoreProvider >
@@ -40,6 +52,7 @@ export default function MyApp({
         <Component {...pageProps} />
         </RootStoreProvider>
       )}
+      </ApolloProvider>
     </>
   );
 }
